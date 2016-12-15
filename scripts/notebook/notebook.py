@@ -40,7 +40,7 @@ def calc_phase(time):
 
 def basis(index,time):
     return npy.exp(- gaussian_ker[index,0]*(calc_phase(time)-gaussian_ker[index,1]))
-    
+
 def calc_target_force(time):
     return (1./(pos[T-1]-pos[0]))*(-K*pos[time]+D*vel[min(time,vel.shape[0]-1)]+T*acc[min(time,acc.shape[0]-1)])    
 
@@ -63,55 +63,9 @@ def update_phi():
 	        for j in range(0,20):
 	            det += basis(j,t)
 	        phi[i,t] = basis(i,t)*calc_phase(t)/det
-            
-weights = npy.dot(npy.linalg.pinv(phi),target_forces) 
-weights
-pos
-for i in range(0,20):
-    for t in range(0,20):
-        det = 0
-        for j in range(0,20):
-            det += basis(j,t)
-        phi[i,t] = basis(i,t)*calc_phase(t)/det
-            
 
-	def calc_force(self,time):
-
-		ret = 0
-		den = 0
-		for i in range(0,self.number_kernels):
-			ret += force_weights[i] * gaussian_basis_function(i,time) * calc_phase(time)
-			den += gaussian_basis_function(i,time)
-		ret /= den
-		return ret
-
-	def learn_DMP(self):
-		
-			
-
-	# def weight_gradient(self,time,index):
-
-	# 	ret = 0
-	# 	den = 0
-	# 	for i in range(0,self.number_kernels):			
-	# 		den += gaussian_basis_function(i,time)
-
-	# 	return gaussian_basis_function(index,time)*calc_phase(time) / den
-
-	# def gradients(self):
-	# 	# Update the weights of the Gaussian Combination
-
-	# 	grad = npy.zeros(self.number_kernels)		
-	# 	for t in range(0,self.T):			
-	# 		for i in range(0,self.number_kernels):
-	# 			grad[i] += 2*(self.calc_target_force(t) - self.calc_force(t))*(self.weight_gradient(t,i))	
-
-	# 	return grad
-
-	# def 
-
-	# SOLVE using SVD / PseudoInverse.
-
-
-
+def learn_DMP():            
+	update_target_forces()
+	update_phi()
+	weights = npy.dot(npy.linalg.pinv(phi),target_forces) 
 
