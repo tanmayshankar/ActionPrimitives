@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#n!e/nusr/bin/env python
 import numpy as npy
 import matplotlib.pyplot as plt
 import sys
