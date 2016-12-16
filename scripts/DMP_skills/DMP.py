@@ -23,6 +23,10 @@ class DMP:
 		self.number_kernels = 20
 		self.dim = 2
 		self.gaussian_kernels = npy.zeros((self.number_kernels,self.dim))
+		self.gaussian_kernels[:,0] = 0.1
+		# Setting mean. 
+		self.gaussian_kernels[:,1] = npy.array(range(self.number_kernels)).astype(float)/self.number_kernels
+
 		self.weights = npy.zeros((self.number_kernels,self.dim))
 
 		# Assuming 2D data.
@@ -33,8 +37,14 @@ class DMP:
 		self.phi = npy.zeros((self.T,self.number_kernels))
 		self.target_forces = npy.zeros((self.T,self.dim))
 
-	def load_pos(self):
-		self.pos = npy.loadtxt(str(sys.argv[1]))
+	# def load_pos(self):
+	# 	self.pos = npy.loadtxt(str(sys.argv[1]))
+	# 	self.vel = npy.diff(self.pos,axis=0)
+	# 	self.acc = npy.diff(self.vel,axis=0)
+	# 	self.T = self.pos.shape[0]
+
+	def load_pos(self, pose):
+		self.pos = copy.deepcopy(pose)
 		self.vel = npy.diff(self.pos,axis=0)
 		self.acc = npy.diff(self.vel,axis=0)
 		self.T = self.pos.shape[0]
@@ -46,12 +56,6 @@ class DMP:
 
 	def basis(self,index,time):
 		return npy.exp(-self.gaussian_kernels[index,0]*(self.calc_phase(time)-self.gaussian_kernels[index,1]))
-
-	def initialize_gaussian_kernels(self):
-		# Setting variance.
-		self.gaussian_kernels[:,0] = 0.1
-		# Setting mean. 
-		self.gaussian_kernels[:,1] = npy.array(range(self.number_kernels)).astype(float)/self.number_kernels
 
 	def calc_phase(self,time):
 		# Calculate Theta
@@ -91,16 +95,26 @@ class DMP:
 	def learn_DMP(self):            
 		self.update_target_force_vanilla()
 		self.update_phi()
-		print(self.phi)
-		self.weights = npy.dot(npy.linalg.pinv(self.phi),self.target_forces) 		
-					
-		print(self.weights)
+		# print(self.phi)
+		self.weights = npy.dot(npy.linalg.pinv(self.phi),self.target_forces) 					
+		# print(self.weights)
+
+	def save_DMP_parameters(self,file_suffix):
+
+		with file("force_weights_{0}.npy".format(file_suffix),'w') as outfile:
+			npy.save(outfile,self.weights)
+	
+		with file("position_{0}.npy".format(file_suffix),'w') as outfile:
+			npy.save(outfile, self.pos)
+
+		with file("phi_{0}.npy".format(file_suffix),'w') as outfile:
+			npy.save(outfile, self.phi)			
 
 def main(args):    
 
 	dmp = DMP()
-	dmp.initialize_gaussian_kernels()	
-	dmp.load_pos()
+	# dmp.initialize_gaussian_kernels()	
+	# dmp.load_pos()
 	dmp.initialize_variables()
 	dmp.learn_DMP()
 
