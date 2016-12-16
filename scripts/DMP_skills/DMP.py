@@ -1,4 +1,4 @@
-#n!e/nusr/bin/env python
+#!/usr/bin/env python
 import numpy as npy
 import matplotlib.pyplot as plt
 import sys
@@ -8,7 +8,6 @@ import copy
 import os
 
 class DMP:
-
 	def __init__(self):
 
 		self.K = 100
