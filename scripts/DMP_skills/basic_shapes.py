@@ -32,6 +32,10 @@ class primitive_library():
 		for i in range(0,number_segments):
 			self.primitives[i].learn_DMP()
 
+	def save_DMPs(self):
+		for i in range(0,number_segments):
+			self.primitives[i].save_DMP_parameters(i)
+
 def main(args):    
 
 	library = primitive_library()
