@@ -9,13 +9,17 @@ counter = 0
 
 fig,ax = plt.subplots()
 ax.plot(range(50))
+plt.hold(True)
 
 def onclick(event): 
 	global counter, points
 	print(counter)
 	points[counter,0] = event.xdata
-	points[counter,1] = event.ydata		
+	points[counter,1] = event.ydata			
+	plt.plot(points[counter,0],points[counter,1],'or')
 	counter+=1
+	# plt.show()
+	plt.draw()
 	if (counter==99):
 		plt.close()
 
