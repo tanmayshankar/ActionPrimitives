@@ -13,6 +13,7 @@ class DMP:
 		self.K = 100
 		self.D = 2*npy.sqrt(self.K)
 		self.T = 20
+		self.tau = 1
 
 		self.theta = 1
 		self.alpha = 1
@@ -53,14 +54,21 @@ class DMP:
 		self.phi = npy.zeros((self.T,self.number_kernels))
 		self.target_forces = npy.zeros((self.T,self.dim))
 		self.weights[:,:]=0
-
+	
 	def basis(self,index,time):
-		return npy.exp(-self.gaussian_kernels[index,0]*(self.calc_phase(time)-self.gaussian_kernels[index,1]))
+		return npy.exp(-self.gaussian_kernels[index,0]*(time-self.gaussian_kernels[index,1])**2)
 
 	def calc_phase(self,time):
-		# Calculate Theta
-		self.theta = npy.exp(-self.alpha*float(time)/self.T)
+		self.theta = npy.exp(-self.alpha*float(time)/self.tau)
 		return self.theta
+
+	# def basis(self,index,time):
+	# 	return npy.exp(-self.gaussian_kernels[index,0]*(self.calc_phase(time)-self.gaussian_kernels[index,1]))
+
+	# def calc_phase(self,time):
+	# 	# Calculate Theta
+	# 	self.theta = npy.exp(-self.alpha*float(time)/self.T)
+	# 	return self.theta
 
  	def calc_target_force_vanilla(self,time):
 		return (1./(self.pos[self.T-1]-self.pos[0]))*(-self.K*self.pos[time]+self.D*self.vel[min(time,self.vel.shape[0]-1)]+self.T*self.acc[min(time,self.acc.shape[0]-1)])    

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from headers import *
-from DMP import *
+from DMP_Invariant import *
 
 class primitive_library():
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from headers import *
-from DMP import *
+from DMP_Invariant import *
 from DMP_Library import * 
 
 number_points = 20

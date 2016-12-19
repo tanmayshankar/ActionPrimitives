@@ -39,17 +39,17 @@ class DMP:
 		self.eta = npy.zeros((self.T, self.dim))
 		self.phi = npy.zeros((self.number_kernels,self.T,self.T))		
 
-	def load_pos(self):
-		self.pos = npy.load(str(sys.argv[1]))
-		self.vel = npy.diff(self.pos,axis=0)
-		self.acc = npy.diff(self.vel,axis=0)
-		self.T = self.pos.shape[0]
-
-	# def load_pos(self, pose):
-	# 	self.pos = copy.deepcopy(pose)
+	# def load_pos(self):
+	# 	self.pos = npy.load(str(sys.argv[1]))
 	# 	self.vel = npy.diff(self.pos,axis=0)
 	# 	self.acc = npy.diff(self.vel,axis=0)
 	# 	self.T = self.pos.shape[0]
+
+	def load_pos(self, pose):
+		self.pos = copy.deepcopy(pose)
+		self.vel = npy.diff(self.pos,axis=0)
+		self.acc = npy.diff(self.vel,axis=0)
+		self.T = self.pos.shape[0]
 
 	def initialize_variables(self):
 		self.phi = npy.zeros((self.number_kernels,self.T,self.T))
