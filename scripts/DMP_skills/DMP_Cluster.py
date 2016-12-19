@@ -17,7 +17,7 @@ weights_2d = weights.reshape((weights.shape[0]*weights.shape[1],weights.shape[2]
 number_clusters = 20
 kmeans = KMeans(n_clusters = number_clusters, random_state=0).fit(weights.reshape(number_samples,number_kernels*number_dimensions))
 
-cluster_labels = kmeans.labels_
+# cluster_labels = kmeans.labels_
 # kmeans.cluster_centers_
 
 points = npy.load(str(sys.argv[2]))
@@ -38,6 +38,10 @@ labels = labels.reshape(number_samples*number_kernels,1)
 
 model = skl_manifold.TSNE(n_components=2,random_state=0)
 embedded_weights = model.fit_transform(weights.reshape(number_samples,40))
+
+for i in range(number_clusters):
+
+
 
 plt.scatter(points_2d[:,0],points_2d[:,1],c=point_labels,s=200)
 plt.title('Plot data points of each trajectory.')
@@ -69,6 +73,7 @@ plt.close()
 
 plt.scatter(embedded_weights[:,0],embedded_weights[:,1],c=kmeans.labels_,s=200)
 plt.title('Plot Embedded Weights using TSNE.')
+plt.colorbar()
 plt.savefig('Embedded_Weights.png')
 plt.close()
 # plt.show()
