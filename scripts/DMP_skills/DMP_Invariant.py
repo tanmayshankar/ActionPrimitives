@@ -92,32 +92,19 @@ class DMP:
 
 				self.phi[i,t,t] = self.basis(i,t)			
 
-	# def update_phi(self):
-
-	# 	for i in range(0,self.number_kernels):
-	# 	    for t in range(0,self.T):
-	# 	        det = 0
-	# 	        for j in range(0,20):		        	
-	# 	        	det += self.basis(j,t)
-	# 	        self.phi[i,t] = self.basis(i,t)*self.calc_phase(t)/det		
-
 	def update_eta(self):
 		# self.eta[:,:] = 0
 		for t in range(self.T):
 			self.eta[t,:] = self.calc_phase(t)*(self.pos[self.T-1]-self.pos[0])
 
-		# for i in range(self.dim):
-		# 	self.eta_T[:,i] = self.eta[:,i].reshape(self.T,-1)
-
-
 	def learn_DMP(self):            
-		print("POS:", self.pos,self.vel, self.acc)
+		# print("POS:", self.pos,self.vel, self.acc)
 		self.update_target_force_auke()
-		print("TARGET FORCE:",self.target_forces)
+		# print("TARGET FORCE:",self.target_forces)
 		self.update_phi()
-		print("PHI:",self.phi)
+		# print("PHI:",self.phi)
 		self.update_eta()
-		print("ETA:",self.eta)
+		# print("ETA:",self.eta)
 
 		for j in range(0,self.dim):
 			for i in range(0,self.number_kernels):
@@ -133,9 +120,6 @@ class DMP:
 	
 		with file("position_{0}.npy".format(file_suffix),'w') as outfile:
 			npy.save(outfile, self.pos)
-
-		# with file("phi_{0}.npy".format(file_suffix),'w') as outfile:
-		# 	npy.save(outfile, self.phi)			
 
 def main(args):    
 
