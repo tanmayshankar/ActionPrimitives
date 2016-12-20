@@ -9,7 +9,7 @@ def move_files(ind):
 	for r in range(9):
 		shutil.move("force_weights_{0}.npy".format(r),"Data/Mouse_Data/Points_{0}/".format(ind))	
 		shutil.move("position_{0}.npy".format(r),"Data/Mouse_Data/Points_{0}/".format(ind))	
-		shutil.move("phi_{0}.npy".format(r),"Data/Mouse_Data/Points_{0}/".format(ind))	
+		# shutil.move("phi_{0}.npy".format(r),"Data/Mouse_Data/Points_{0}/".format(ind))	
 
 for i in range(0,number_points):
 	print("The Counter is :",i)
