@@ -9,6 +9,7 @@ number_segments = 9
 number_samples = number_segments*number_trajectories
 number_kernels = 20
 number_dimensions = 2
+segment_length = 20 
 
 # This should be of the shape: Number_samples, Number_kernels, Number_Dimensions
 weights = npy.load(str(sys.argv[1]))
@@ -23,8 +24,11 @@ kmeans = KMeans(n_clusters = number_clusters, random_state=0).fit(weights.reshap
 points = npy.load(str(sys.argv[2]))
 points_2d = points.reshape((points.shape[0]*points.shape[1],points.shape[2]))
 
-labels = npy.zeros((number_samples, number_kernels))
-point_labels = npy.zeros((number_samples, number_kernels))
+# labels = npy.zeros((number_samples, number_kernels))
+# point_labels = npy.zeros((number_samples, number_kernels))
+
+labels = npy.zeros((number_samples, segment_length))
+point_labels = npy.zeros((number_samples, segment_length))
 
 for i in range(number_trajectories):
 	for j in range(number_segments):
@@ -33,8 +37,8 @@ for i in range(number_trajectories):
 		# labels[number_trajectories*i+j,:] = kmeans.labels_[number_trajectories*i+j]
 		labels[number_segments*i+j,:] = kmeans.labels_[number_segments*i+j]
 
-point_labels = point_labels.reshape(number_samples*number_kernels,1)
-labels = labels.reshape(number_samples*number_kernels,1)
+point_labels = point_labels.reshape(number_samples*segment_length,1)
+labels = labels.reshape(number_samples*segment_length,1)
 
 model = skl_manifold.TSNE(n_components=2,random_state=0)
 embedded_weights = model.fit_transform(weights.reshape(number_samples,40))
@@ -72,3 +76,23 @@ def ALL_plot():
 	jplot(embedded_weights, kmeans.labels_, "Embedded Weights using TSNE.")
 
 ALL_plot_and_save()
+
+for i in range(0,number_trajectories):
+
+	for j in range(number_segments):
+		plt.scatter(points_2d[(point_labels==j).astype(int),0],points_2d[(point_labels==j).astype(int),1],c=point_labels[(point_labels==j).astype(int)],s=200)
+		plt.title("Trajectory {0}, Segment {1}.".format(i,j))
+		plt.colorbar()
+		manager = plt.get_current_fig_manager()
+		manager.resize(*manager.window.maxsize())
+		# plt.show(block=False)
+		plt.show()
+		
+	for j in range(number_clusters):    	
+		plt.scatter(points_2d[(labels==j).astype(int),0],points_2d[(labels==j).astype(int),1],c=labels[(labels==j).astype(int)],s=200)
+		plt.title("Trajectory {0}, Cluster {1}.".format(i,j))
+		plt.colorbar()
+		manager = plt.get_current_fig_manager()
+		manager.resize(*manager.window.maxsize())
+		plt.show()
+
