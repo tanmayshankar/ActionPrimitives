@@ -8,7 +8,9 @@ points = npy.zeros((num_points,2))
 counter = 0
 
 fig,ax = plt.subplots()
-ax.plot(range(50))
+# ax.plot(range(50))
+plt.ylim((0,50))
+plt.xlim((0,50))
 plt.hold(True)
 
 def onclick(event): 
