@@ -33,9 +33,12 @@ class DMP:
 
 		# Setting variables for Rollouts.	
 		self.rollout_T = 30		
-		self.pos_r = npy.zeros((self.rollout_T,self.dim))
-		self.vel_r = npy.zeros((self.rollout_T,self.dim))
-		self.acc_r = npy.zeros((self.rollout_T,self.dim))		
+		self.pos_roll = npy.zeros((self.rollout_T,self.dim))
+		self.vel_roll = npy.zeros((self.rollout_T,self.dim))
+		self.acc_roll = npy.zeros((self.rollout_T,self.dim))		
+		self.force_roll = npy.zeros((self.rollout_T, self.dim))
+		self.goal = npy.zeros(self.dim)
+		self.dt = 0.01
 
 	def initialize_gaussian_kernels(self):				
 		# t_space = npy.linspace(0,self.T-1,self.T)
@@ -126,7 +129,27 @@ class DMP:
 			npy.save(outfile, self.pos)
 
 	def calc_rollout_force(self,time):
-		return 
+		for i in range(self.number_kernels):
+			self.force_roll[time,:] += self.basis(i,time)*self.weights[i,:]						
+
+		self.force_roll[time,:] *= self.calc_phase(time)*(self.goal-self.pos_roll[0,:])
+
+	def calc_rollout_acceleration(self,time):
+		self.acc_roll[time,:] = (1/self.tau)*(self.alphaz * (self.betaz * (self.goal - self.pos_roll[time-1,:]) - self.tau*self.vel_roll[time-1,:]) + self.force_roll[time])
+
+	def calc_rollout_vel(self,time):
+		self.vel_roll[time,:] = self.vel_roll[time-1,:] + (1/self.tau)*self.acc_roll[time,:]*self.dt
+
+	def calc_rollout_pos(self,time):
+		self.pos_roll[time,:] = self.pos_roll[time-1,:] + self.vel_roll[time,:] * self.dt
 
 	def DMP_Rollout(self):
 
+		# For all time: 
+
+		self.calc_rollout_force(roll_time)
+		self.calc_rollout_acceleration(roll_time)
+		self.calc_rollout_vel(roll_time)
+		self.calc_rollout_pos(roll_time)
+
+				
