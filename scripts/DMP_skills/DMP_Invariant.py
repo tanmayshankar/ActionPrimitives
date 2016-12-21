@@ -15,8 +15,8 @@ class DMP:
 		self.T = 20
 
 		self.theta = 1
-		self.alpha = 1
-		self.tau = 1
+		self.alpha = 8
+		self.tau = self.T
 
 		self.alphaz = 25
 		self.betaz = self.alphaz/4
@@ -37,10 +37,12 @@ class DMP:
 		self.phi = npy.zeros((self.number_kernels,self.T,self.T))		
 
 	def initialize_gaussian_kernels(self):				
-		t_space = npy.linspace(0,1,self.T)
+		# t_space = npy.linspace(0,self.T-1,self.T)
+		t_space = npy.linspace(0,self.T,self.number_kernels)
 		
 		# Setting the centers of the Gaussian Kernels. 
-		self.gaussian_kernels[:,0] = npy.exp(-self.alpha*t_space)
+		self.gaussian_kernels[:,0] = npy.exp(-self.alpha*t_space/self.tau)
+		# self.gaussian_kernels[:,0] = self.calc_phase(t_space)
 		# Setting the variances of the Gaussian Kernels.
 		self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]	
 
@@ -48,7 +50,7 @@ class DMP:
 		self.pos = npy.load(str(sys.argv[1]))
 		self.vel = npy.diff(self.pos,axis=0)
 		self.acc = npy.diff(self.vel,axis=0)
-		self.T = self.pos.shape[0]
+		# self.tau = self.pos.shape[0]
 
 	# def load_pos(self, pose):
 	# 	self.pos = copy.deepcopy(pose)
@@ -71,7 +73,7 @@ class DMP:
 	def basis(self,index,time):
 		return npy.exp(-self.gaussian_kernels[index,1]*(self.calc_phase(time)-self.gaussian_kernels[index,0])**2)
 
-	def calc_phase(self,time):
+	def calc_phase(self ,time):
 		# Calculate Theta
 		# self.theta = npy.exp(-self.alpha*float(time)/self.T)
 		self.theta = npy.exp(-self.alpha*float(time)/self.tau)
