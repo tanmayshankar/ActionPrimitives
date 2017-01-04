@@ -1,27 +1,32 @@
 #!/usr/bin/env python
 from headers import *
-from DMP import *
-from DMP_Library import *
+# from DMP import *
+# from DMP_Library import *
 import sklearn.manifold as skl_manifold
+weights = npy.load(str(sys.argv[1]))
+points = npy.load(str(sys.argv[2]))
+
 
 number_trajectories = 20
 number_segments = 9
 number_samples = number_segments*number_trajectories
+
+number_samples = 34
 number_kernels = 20
 number_dimensions = 2
 segment_length = 20 
 
 # This should be of the shape: Number_samples, Number_kernels, Number_Dimensions
-weights = npy.load(str(sys.argv[1]))
+
 weights_2d = weights.reshape((weights.shape[0]*weights.shape[1],weights.shape[2]))
 
-number_clusters = 15
+number_clusters = 5
 kmeans = KMeans(n_clusters = number_clusters, random_state=0).fit(weights.reshape(number_samples,number_kernels*number_dimensions))
 
 # cluster_labels = kmeans.labels_
 # kmeans.cluster_centers_
 
-points = npy.load(str(sys.argv[2]))
+
 points_2d = points.reshape((points.shape[0]*points.shape[1],points.shape[2]))
 
 # labels = npy.zeros((number_samples, number_kernels))
@@ -44,7 +49,7 @@ model = skl_manifold.TSNE(n_components=2,random_state=0)
 embedded_weights = model.fit_transform(weights.reshape(number_samples,40))
 
 def plot_and_save(to_plot,color,title,name):
-	plt.scatter(to_plot[:,0],to_plot[:,1],c=color,s=200)
+	plt.scatter(to_plot[:,0],to_plot[:,1],c=color,s=400)
 	plt.title(str(title))
 	plt.colorbar()
 	manager = plt.get_current_fig_manager()
@@ -54,7 +59,7 @@ def plot_and_save(to_plot,color,title,name):
 	plt.close()
 
 def jplot(to_plot,color,title):
-	plt.scatter(to_plot[:,0],to_plot[:,1],c=color,s=200)
+	plt.scatter(to_plot[:,0],to_plot[:,1],c=color,s=400)
 	plt.title(str(title))
 	plt.colorbar()
 	manager = plt.get_current_fig_manager()
@@ -77,22 +82,59 @@ def ALL_plot():
 
 ALL_plot_and_save()
 
-for i in range(0,number_trajectories):
+# for i in range(0,number_trajectories):
+# 	for j in range(number_segments):
 
-	for j in range(number_segments):
-		plt.scatter(points_2d[(point_labels==j).astype(int),0],points_2d[(point_labels==j).astype(int),1],c=point_labels[(point_labels==j).astype(int)],s=200)
-		plt.title("Trajectory {0}, Segment {1}.".format(i,j))
-		plt.colorbar()
-		manager = plt.get_current_fig_manager()
-		manager.resize(*manager.window.maxsize())
-		# plt.show(block=False)
-		plt.show()
-		
-	for j in range(number_clusters):    	
-		plt.scatter(points_2d[(labels==j).astype(int),0],points_2d[(labels==j).astype(int),1],c=labels[(labels==j).astype(int)],s=200)
-		plt.title("Trajectory {0}, Cluster {1}.".format(i,j))
-		plt.colorbar()
-		manager = plt.get_current_fig_manager()
-		manager.resize(*manager.window.maxsize())
-		plt.show()
+# 		fig,ax = plt.subplots()		
+# 		plt.ylim((0,50))
+# 		plt.xlim((0,50))
+# 		plt.scatter(points[9*i+j,:,0],points[9*i+j,:,1],s=100)
+# 		plt.title("Trajectory {0}, Segment {1}.".format(i,j))
+# 		# manager = plt.get_current_fig_manager()
+# 		# manager.resize(*manager.window.maxsize())
+# 		# plt.show(block=False)
+# 		plt.savefig("Traj_{0}_Seg_{1}.png".format(i,j),bbox_inches='tight')
+# 		plt.close()
+
+# for i in range(number_trajectories):				
+# 	for j in range(number_clusters):    
+
+# 		fig,ax = plt.subplots()		
+# 		plt.ylim((0,50))
+# 		plt.xlim((0,50))
+
+# 		ind = npy.zeros(number_samples)
+# 		ind[9*i:9*(i+1)]=1
+# 		ind *= (kmeans.labels_==j).astype(int)	
+
+# 		ind[npy.where(kmeans.labels_==j)[0]]
+
+# 		ind = npy.where(ind)
+				
+# 		plt.scatter(points[ind,:,0],points[ind,:,1],s=100)
+# 		plt.title("Trajectory {0}, Cluster {1}.".format(i,j))		
+# 	# manager = plt.get_current_fig_manager()	
+# 	# manager.resize(*manager.window.maxsize())
+# 		plt.show()
+# 	# plt.savefig("Traj_{0}_Cluster_{1}.png".format(i,j),bbox_inches='tight')		
+# 		plt.close()
+
+for j in range(0,number_clusters):
+	fig,ax = plt.subplots()
+	plt.ylim((0,50))
+	plt.xlim((0,50))
+	plt.scatter(points_2d[npy.where(labels==j)[0],0],points_2d[npy.where(labels==j)[0],1],c=point_labels[npy.where(labels==j)[0]],s=400)
+	# plt.scatter(points_2d[n_componentsy.where(labels==j)[0],0],points_2d[npy.where(labels==j)[0],1],s=200)
+	plt.title("Cluster {0}.".format(j))
+	manager = plt.get_current_fig_manager()	
+	manager.resize(*manager.window.maxsize())
+	plt.colorbar()
+	plt.show(block=False)
+	plt.savefig("Cluster_{0}.png".format(j),bbox_inches='tight')		
+	plt.close()
+
+
+
+# npy.where(y)[0,npy.where((9*i)<npy.where(y)[0]<(9*(i+1)))]
+
 
