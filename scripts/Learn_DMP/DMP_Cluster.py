@@ -4,6 +4,7 @@ import sklearn.manifold as skl_manifold
 
 weights1 = npy.load(str(sys.argv[1]))
 points1 = npy.load(str(sys.argv[2]))
+rollout1 = npy.load(str(sys.argv[3]))
 
 number_trajectories = 20
 number_segments = 19
@@ -15,6 +16,7 @@ number_clusters = 40
 
 weights = npy.zeros((number_samples-2,number_kernels,number_dimensions))
 points = npy.zeros((number_samples-2,segment_length,number_dimensions))
+rollout = npy.zeros((number_samples-2,segment_length,number_dimensions))
 
 counter = 0
 for i in range(number_samples):
@@ -22,6 +24,7 @@ for i in range(number_samples):
     # if (i!=153)and(i!=294):
         weights[counter]=weights1[i]
         points[counter]=points1[i]
+        rollout[counter]=rollout1[i]
         counter += 1
         
 number_samples -= 2
@@ -46,6 +49,10 @@ with file("meta_weights.npy",'w') as outfile:
 
 with file("meta_points.npy",'w') as outfile:
 	npy.save(outfile,points)
+
+with file("meta_rollout.npy",'w') as outfile:
+	npy.save(outfile,rollout)
+
 
 with file("clustering_labels.npy",'w') as outfile:
 	npy.save(outfile,kmeans.labels_)
@@ -104,46 +111,46 @@ def ALL_plot():
 	jplot(weights_2d, point_labels, "Weights by Segment.")
 	jplot(embedded_weights, kmeans.labels_, "Embedded Weights using TSNE.")
 
-# ALL_plot_and_save()
+ALL_plot_and_save()
 
 
 
-# # for i in range(0,number_trajectories):
-# # 	for j in range(number_segments):
+# for i in range(0,number_trajectories):
+# 	for j in range(number_segments):
 
-# # 		fig,ax = plt.subplots()		
-# # 		plt.ylim((0,50))
-# # 		plt.xlim((0,50))
-# # 		plt.scatter(points[9*i+j,:,0],points[9*i+j,:,1],s=100)
-# # 		plt.title("Trajectory {0}, Segment {1}.".format(i,j))
-# # 		# manager = plt.get_current_fig_manager()
-# # 		# manager.resize(*manager.window.maxsize())
-# # 		# plt.show(block=False)
-# # 		plt.savefig("Traj_{0}_Seg_{1}.png".format(i,j),bbox_inches='tight')
-# # 		plt.close()
+# 		fig,ax = plt.subplots()		
+# 		plt.ylim((0,50))
+# 		plt.xlim((0,50))
+# 		plt.scatter(points[9*i+j,:,0],points[9*i+j,:,1],s=100)
+# 		plt.title("Trajectory {0}, Segment {1}.".format(i,j))
+# 		# manager = plt.get_current_fig_manager()
+# 		# manager.resize(*manager.window.maxsize())
+# 		# plt.show(block=False)
+# 		plt.savefig("Traj_{0}_Seg_{1}.png".format(i,j),bbox_inches='tight')
+# 		plt.close()
 
-# # for i in range(number_trajectories):				
-# # 	for j in range(number_clusters):    
+# for i in range(number_trajectories):				
+# 	for j in range(number_clusters):    
 
-# # 		fig,ax = plt.subplots()		
-# # 		plt.ylim((0,50))
-# # 		plt.xlim((0,50))
+# 		fig,ax = plt.subplots()		
+# 		plt.ylim((0,50))
+# 		plt.xlim((0,50))
 
-# # 		ind = npy.zeros(number_samples)
-# # 		ind[9*i:9*(i+1)]=1
-# # 		ind *= (kmeans.labels_==j).astype(int)	
+# 		ind = npy.zeros(number_samples)
+# 		ind[9*i:9*(i+1)]=1
+# 		ind *= (kmeans.labels_==j).astype(int)	
 
-# # 		ind[npy.where(kmeans.labels_==j)[0]]
+# 		ind[npy.where(kmeans.labels_==j)[0]]
 
-# # 		ind = npy.where(ind)
+# 		ind = npy.where(ind)
 				
-# # 		plt.scatter(points[ind,:,0],points[ind,:,1],s=100)
-# # 		plt.title("Trajectory {0}, Cluster {1}.".format(i,j))		
-# # 	# manager = plt.get_current_fig_manager()	
-# # 	# manager.resize(*manager.window.maxsize())
-# # 		plt.show()
-# # 	# plt.savefig("Traj_{0}_Cluster_{1}.png".format(i,j),bbox_inches='tight')		
-# # 		plt.close()
+# 		plt.scatter(points[ind,:,0],points[ind,:,1],s=100)
+# 		plt.title("Trajectory {0}, Cluster {1}.".format(i,j))		
+# 	# manager = plt.get_current_fig_manager()	
+# 	# manager.resize(*manager.window.maxsize())
+# 		plt.show()
+# 	# plt.savefig("Traj_{0}_Cluster_{1}.png".format(i,j),bbox_inches='tight')		
+# 		plt.close()
 
 
 
