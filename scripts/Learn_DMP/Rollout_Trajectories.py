@@ -36,8 +36,7 @@ class DMP():
 		self.force_roll = npy.zeros((self.rollout_time,self.dimensions))        
 		self.pos_var = npy.zeros(self.dimensions)
 		self.vel_var = npy.zeros(self.dimensions)
-		self.acc_var = npy.zeros(self.dimensions)        
-		self.force_var = npy.zeros(self.dimensions)        
+		self.acc_var = npy.zeros(self.dimensions)        		
 		self.goal = npy.zeros(self.dimensions)
 		self.start = npy.zeros(self.dimensions)        
 
@@ -167,6 +166,9 @@ class DMP():
 
 		with file('roll_force.npy','w') as outfile:
 			npy.save(outfile,self.force_roll)
+
+		with file('force_weights.npy','w') as outfile:
+			npy.save(outfile,self.weights)		
 
 	def load_weights(self, weight):
 		self.weights = copy.deepcopy(weight)	
