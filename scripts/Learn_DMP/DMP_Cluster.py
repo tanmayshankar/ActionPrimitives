@@ -19,6 +19,7 @@ points = npy.zeros((number_samples-2,segment_length,number_dimensions))
 counter = 0
 for i in range(number_samples):
     if (i!=153)and(i!=244):
+    # if (i!=153)and(i!=294):
         weights[counter]=weights1[i]
         points[counter]=points1[i]
         counter += 1
@@ -40,6 +41,17 @@ print(npy.where(point_labels))
 # for i in range(number_samples):
 # 	print(point_labels[i])
 
+with file("meta_weights.npy",'w') as outfile:
+	npy.save(outfile,weights)
+
+with file("meta_points.npy",'w') as outfile:
+	npy.save(outfile,points)
+
+with file("clustering_labels.npy",'w') as outfile:
+	npy.save(outfile,kmeans.labels_)
+
+with file("cluster_centers.npy",'w') as outfile:
+	npy.save(outfile,kmeans.cluster_centers_)
 
 plabels = npy.zeros(number_samples*segment_length)
 counter = 0
@@ -92,7 +104,7 @@ def ALL_plot():
 	jplot(weights_2d, point_labels, "Weights by Segment.")
 	jplot(embedded_weights, kmeans.labels_, "Embedded Weights using TSNE.")
 
-ALL_plot_and_save()
+# ALL_plot_and_save()
 
 
 
@@ -133,6 +145,10 @@ ALL_plot_and_save()
 # # 	# plt.savefig("Traj_{0}_Cluster_{1}.png".format(i,j),bbox_inches='tight')		
 # # 		plt.close()
 
+
+
+
+# RUN THIS:
 for j in range(0,number_clusters):
 	fig,ax = plt.subplots()
 	plt.ylim((-50,1500))
@@ -161,5 +177,4 @@ for j in range(0,number_clusters):
 	plt.savefig("Index_Colored_Cluster_{0}.png".format(j),bbox_inches='tight')		
 	plt.close()
 
-# # npy.where(y)[0,npy.where((9*i)<npy.where(y)[0]<(9*(i+1)))]
 
