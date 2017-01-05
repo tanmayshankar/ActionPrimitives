@@ -111,7 +111,6 @@ class DMP():
 		dmp.learn_DMP()    
         
 	def initialize_rollout(self,start,goal):
-# 		self.tau = 100
 		self.tau = 1
 		self.pos_var = copy.deepcopy(start)
 		self.pos_roll[0] = copy.deepcopy(start)
@@ -121,7 +120,6 @@ class DMP():
 		self.start = start
 # 		self.dt = self.tau/self.rollout_time   
 		self.dt = 1./self.rollout_time    
-# 		self.dt = 1.0
 
 	def calc_rollout_force(self,roll_time):
 		den = 0        
@@ -129,23 +127,22 @@ class DMP():
 # 		time = roll_time        
 		print(roll_time,time,self.calc_phase(time))
 		for i in range(self.number_kernels):
-			self.force_var += self.basis(i,time)*self.weights[i]            
+			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            
 			den += self.basis(i,time)
-		self.force_var *= (self.goal-self.pos_roll[0])*self.calc_phase(time)/den
-		self.force_roll[roll_time] = self.force_var        
+		self.force_roll[roll_time] *= (self.goal-self.pos_roll[0])*self.calc_phase(time)/den
         
 	def calc_rollout_acceleration(self,time):        
 		self.acc_var = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_var) - self.tau*self.vel_var) + self.force_var)
-		self.acc_roll[time] = self.acc_var
+		self.acc_roll[time] = copy.deepcopy(self.acc_var)
         
 	def calc_rollout_vel(self,time):
 		self.vel_var += (1/self.tau)*self.acc_var*self.dt
-		self.vel_roll[time] = self.vel_var
+		self.vel_roll[time] = copy.deepcopy(self.vel_var)
 
 	def calc_rollout_pos(self,time):
 		self.pos_var += self.vel_var * self.dt
 # 		self.pos_var += self.vel_var*self.dt + 0.5*self.acc_var*(self.dt**2)
-		self.pos_roll[time] = self.pos_var        
+		self.pos_roll[time] = copy.deepcopy(self.pos_var)
 
 	def rollout(self,start,goal):
 
@@ -184,7 +181,7 @@ def main(args):
 	dmp.initialize_variables()
 	dmp.learn_DMP()
 	start = npy.zeros(2)	
-	goal = npy.array([1,1])
+	goal = npy.ones(2)
 	dmp.rollout(start, goal)
 	dmp.save_rollout()
 
