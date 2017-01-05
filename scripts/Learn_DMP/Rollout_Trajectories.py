@@ -88,7 +88,7 @@ class DMP():
 		self.eta[:,1] = vector_phase*(self.demo_pos[self.time_steps-1,1]-self.demo_pos[0,1])
 
 	def learn_DMP(self):	
-		self.update_target_force()        
+		self.update_target_force_dtau()        
 		self.update_phi()
 		self.update_eta()
 
@@ -132,7 +132,7 @@ class DMP():
 		self.force_roll[roll_time] *= (self.goal-self.pos_roll[0])*self.calc_phase(time)/den
         
 	def calc_rollout_acceleration(self,time):        
-		self.acc_var = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_var) - self.tau*self.vel_var) + self.force_var)
+		self.acc_var = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_var) - self.tau*self.vel_var) + self.force_roll[time])
 		self.acc_roll[time] = copy.deepcopy(self.acc_var)
         
 	def calc_rollout_vel(self,time):
