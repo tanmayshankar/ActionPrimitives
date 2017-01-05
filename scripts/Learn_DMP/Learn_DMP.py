@@ -87,8 +87,8 @@ class DMP():
 		self.eta[:,0] = vector_phase*(self.demo_pos[self.time_steps-1,0]-self.demo_pos[0,0])
 		self.eta[:,1] = vector_phase*(self.demo_pos[self.time_steps-1,1]-self.demo_pos[0,1])
 
-	def learn_DMP(self):	
-		self.update_target_force()        
+	def learn_DMP(self):		
+		self.update_target_force()
 		self.update_phi()
 		self.update_eta()
 
@@ -104,11 +104,17 @@ class DMP():
 	
 		with file("position_{0}.npy".format(file_suffix),'w') as outfile:
 			npy.save(outfile, self.demo_pos)
-            
+
+		with file("velocity_{0}.npy".format(file_suffix),'w') as outfile:
+			npy.save(outfile, self.demo_pos)
+
+		with file("acceleration_{0}.npy".format(file_suffix),'w') as outfile:
+			npy.save(outfile, self.demo_pos)
+
 	def shebang(self,pos,vel,acc):
 		dmp.load_trajectory(pos,vel,acc)
 		dmp.initialize_variables()
-		dmp.learn_DMP()    
+		dmp.learn_DMP()  
         
 	def initialize_rollout(self,start,goal):
 # 		self.tau = 100
@@ -155,24 +161,7 @@ class DMP():
 			self.calc_rollout_force(i)
 			self.calc_rollout_acceleration(i)
 			self.calc_rollout_vel(i)
-			self.calc_rollout_pos(i)   
-
-	def save_rollout(self):
-
-		with file('roll_pos.npy','w') as outfile:
-			npy.save(outfile,self.pos_roll)
-
-		with file('roll_vel.npy','w') as outfile:
-			npy.save(outfile,self.vel_roll)
-
-		with file('roll_acc.npy','w') as outfile:
-			npy.save(outfile,self.acc_roll)
-
-		with file('roll_force.npy','w') as outfile:
-			npy.save(outfile,self.force_roll)
-
-	def load_weights(self, weight):
-		self.weights = copy.deepcopy(weight)	
+			self.calc_rollout_pos(i) 
 
 def main(args):    
 
@@ -183,11 +172,6 @@ def main(args):
 	dmp.load_trajectory(pos,vel,acc)	
 	dmp.initialize_variables()
 	dmp.learn_DMP()
-	start = npy.zeros(2)	
-	goal = npy.array([1,1])
-	dmp.rollout(start, goal)
-	dmp.save_rollout()
 
 if __name__ == '__main__':
     main(sys.argv)
-

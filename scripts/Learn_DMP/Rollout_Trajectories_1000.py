@@ -9,7 +9,7 @@ class DMP():
 		self.betaz = self.alphaz/4
 		self.alpha = self.alphaz/3
 		
-		self.time_steps = 100
+		self.time_steps = 1000
 		self.tau = self.time_steps
 
 		self.dimensions = 2
@@ -28,7 +28,7 @@ class DMP():
 		self.vector_phase = npy.zeros(self.time_steps)
         
 # Defining Rollout variables.
-		self.rollout_time = 100
+		self.rollout_time = 1000
 		self.dt = 1./self.rollout_time
 		self.pos_roll = npy.zeros((self.rollout_time,self.dimensions))
 		self.vel_roll = npy.zeros((self.rollout_time,self.dimensions))
@@ -170,9 +170,6 @@ class DMP():
 
 		with file('roll_force.npy','w') as outfile:
 			npy.save(outfile,self.force_roll)
-
-	def load_weights(self, weight):
-		self.weights = copy.deepcopy(weight)	
 
 def main(args):    
 

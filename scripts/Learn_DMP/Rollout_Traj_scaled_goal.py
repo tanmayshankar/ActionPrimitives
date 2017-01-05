@@ -184,7 +184,8 @@ def main(args):
 	dmp.initialize_variables()
 	dmp.learn_DMP()
 	start = npy.zeros(2)	
-	goal = npy.array([1,1])
+	goal = npy.ones(2)
+	goal[1] = (pos[pos.shape[0]-1,0]*pos[pos.shape[0]-1,1])/abs(pos[pos.shape[0]-1,0]*pos[pos.shape[0]-1,1])
 	dmp.rollout(start, goal)
 	dmp.save_rollout()
 
