@@ -168,10 +168,10 @@ for i in range(0,number_trajectories):
 	plt.title("Trajectory {0}".format(i))
 	manager = plt.get_current_fig_manager()
 	manager.resize(*manager.window.maxsize())	
-	# plt.show(block=False)
-	plt.show()
+	plt.show(block=False)
+	# plt.show()
 	# plt.draw()
-	# plt.savefig("Trajectory_{0}.png".format(i),bbox_inches='tight')
+	plt.savefig("Trajectory_{0}.png".format(i),bbox_inches='tight')
 	plt.close()
 
 
