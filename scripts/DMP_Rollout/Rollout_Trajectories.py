@@ -4,7 +4,7 @@ from headers import *
 # from Rollout_Trajectories import *
 from DMP_Rollout import *
 
-number_kernels = 1000
+# number_kernels = 1000
 number_trajectories = 20
 dimensions = 2
 
@@ -15,6 +15,7 @@ def move_files(i):
 	shutil.move("roll_acc.npy","Data/Mouse_Data_New/Trajectory_Rollouts/roll_acc_{0}.npy".format(i))
 	shutil.move("roll_force.npy","Data/Mouse_Data_New/Trajectory_Rollouts/roll_force_{0}.npy".format(i))
 	shutil.move("force_weights.npy","Data/Mouse_Data_New/Trajectory_Rollouts/force_weights_{0}.npy".format(i))
+	shutil.move("target_force.npy","Data/Mouse_Data_New/Trajectory_Rollouts/target_force_{0}.npy".format(i))
 
 # for i in range(number_trajectories):
 

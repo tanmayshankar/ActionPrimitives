@@ -28,7 +28,7 @@ class DMP():
 		self.vector_phase = npy.zeros(self.time_steps)
         
 # Defining Rollout variables.
-		self.rollout_time = 1000
+		self.rollout_time = self.time_steps
 		self.dt = 1./self.rollout_time
 		self.pos_roll = npy.zeros((self.rollout_time,self.dimensions))
 		self.vel_roll = npy.zeros((self.rollout_time,self.dimensions))
@@ -55,7 +55,10 @@ class DMP():
 # 		t_range_2 = npy.linspace(0,self.time_steps,self.time_steps)        
 		self.vector_phase = self.calc_vector_phase(t_range)
 		self.gaussian_kernels[:,0] = self.vector_phase
-		self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
+		
+		dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
+		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
+		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
 
 	def calc_phase(self,time):
 		return npy.exp(-self.alpha*float(time)/self.tau)
@@ -170,6 +173,9 @@ class DMP():
 		with file('force_weights.npy','w') as outfile:
 			npy.save(outfile,self.weights)		
 
+		with file('target_force.npy','w') as outfile:
+			npy.save(outfile,self.target_forces)		
+
 	def load_weights(self, weight):
 		self.weights = copy.deepcopy(weight)	
 
@@ -179,6 +185,14 @@ def main(args):
 	pos = npy.load(str(sys.argv[1]))
 	vel = npy.load(str(sys.argv[2]))
 	acc = npy.load(str(sys.argv[3]))
+
+	ts = 1000
+	# pos = pos[::10]
+	# vel = ts*vel[::10]
+	# acc = (ts**2)*acc[::10]
+	vel *= ts
+	acc *= ts**2
+
 	dmp.load_trajectory(pos,vel,acc)	
 	dmp.initialize_variables()
 	dmp.learn_DMP()
@@ -189,4 +203,3 @@ def main(args):
 
 if __name__ == '__main__':
     main(sys.argv)
-
