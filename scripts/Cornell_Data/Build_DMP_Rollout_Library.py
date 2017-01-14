@@ -20,7 +20,7 @@ def move_files(i,j):
 for i in range(0,number_trajectories):
 	for j in range(0,number_segments[i]):
 
-		print("The Counter is :",i,j)
+		print("The Counter is OBL:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_acc.npy".format(i,j)
 		subprocess.call(command.split(),shell=False)
 		move_files(i,j)
@@ -38,7 +38,7 @@ def move_files(i,j):
 for i in range(0,number_trajectories):
 	for j in range(0,number_segments[i]):
 
-		print("The Counter is :",i,j)
+		print("The Counter is OBR:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_acc.npy".format(i,j)
 		subprocess.call(command.split(),shell=False)
 		move_files(i,j)
@@ -56,7 +56,7 @@ def move_files(i,j):
 for i in range(0,number_trajectories):
 	for j in range(0,number_segments[i]):
 
-		print("The Counter is :",i,j)
+		print("The Counter is NBL:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout_new_basis.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_acc.npy".format(i,j)
 		subprocess.call(command.split(),shell=False)
 		move_files(i,j)
@@ -74,7 +74,7 @@ def move_files(i,j):
 for i in range(0,number_trajectories):
 	for j in range(0,number_segments[i]):
 
-		print("The Counter is :",i,j)
+		print("The Counter is NBR:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout_new_basis.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_acc.npy".format(i,j)
 		subprocess.call(command.split(),shell=False)
 		move_files(i,j)
