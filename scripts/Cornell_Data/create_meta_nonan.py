@@ -44,6 +44,7 @@ rh_ob_meta_points = npy.zeros((number_samples-int(len(rh_nan_index)),segment_len
 rh_ob_meta_rollout = npy.zeros((number_samples-int(len(rh_nan_index)),segment_length,number_dimensions))
 
 # LH
+counter = 0
 for i in range(number_samples):
 	if not(i in lh_nan_index):
 		lh_nb_meta_weights[counter] = lh_nb_meta_weights_file[i]
@@ -70,6 +71,7 @@ with file("lh_ob_meta_rollout.npy",'w') as outfile:
 
 
 # RH
+counter = 0
 for i in range(number_samples):
 	if not(i in lh_nan_index):
 		rh_nb_meta_weights[counter] = rh_nb_meta_weights_file[i]
