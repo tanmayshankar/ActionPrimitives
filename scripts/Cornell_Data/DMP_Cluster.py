@@ -6,9 +6,9 @@ def plot_and_save(to_plot,color,title,name):
 	plt.scatter(to_plot[:,0],to_plot[:,1],c=color,s=400)
 	plt.title(str(title))
 	plt.colorbar()
-	manager = plt.get_current_fig_manager()
-	manager.resize(*manager.window.maxsize())
-	plt.show(block=False)
+	# manager = plt.get_current_fig_manager()
+	# manager.resize(*manager.window.maxsize())
+	# plt.show(block=False)
 	plt.savefig(str(name),bbox_inches='tight')
 	plt.close()
 
