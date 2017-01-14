@@ -5,6 +5,8 @@ file_list = glob.glob("Subject1_annotations/*/*[0-9][0-9].txt")
 
 for i in range(len(file_list)):
 	# npy.genfromtxt("file.txt",delimiter=',',dtype=float,skip_footer=1)
+	
+	print(i)
 	skeleton = npy.genfromtxt(file_list[i],delimiter=',',dtype=float,skip_footer=1)
 
 	right_hand = skeleton[:,159:163] #Till 162, saving confidence values.

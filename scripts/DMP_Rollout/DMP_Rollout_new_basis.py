@@ -56,9 +56,9 @@ class DMP():
 		self.vector_phase = self.calc_vector_phase(t_range)
 		self.gaussian_kernels[:,0] = self.vector_phase
 		
-		# dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
-		# self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
-		self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
+		dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
+		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
+		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
 
 	def calc_phase(self,time):
 		return npy.exp(-self.alpha*float(time)/self.tau)
