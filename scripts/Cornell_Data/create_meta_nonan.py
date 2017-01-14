@@ -26,8 +26,8 @@ rh_ob_meta_points_file = npy.load("rh_ob_meta_point_file.npy")
 rh_ob_meta_rollout_file = npy.load("rh_ob_meta_rollout_file.npy")
 
 # NBL
-lh_nan_index = npy.where(npy.isnan(lh_nb_meta_weight_file[:,0,:]))[0]
-rh_nan_index = npy.where(npy.isnan(rh_nb_meta_weight_file[:,0,:]))[0]
+lh_nan_index = npy.where(npy.isnan(lh_nb_meta_weights_file[:,0,:]))[0]
+rh_nan_index = npy.where(npy.isnan(rh_nb_meta_weights_file[:,0,:]))[0]
 
 lh_nb_meta_weights = npy.zeros((number_samples-len(lh_nan_index),number_kernels,number_dimensions))
 lh_nb_meta_points = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
