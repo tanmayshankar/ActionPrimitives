@@ -9,7 +9,9 @@ number_segments = npy.load("Number_Segments.npy")
 
 # ORIGINAL BASIS, LEFT
 def move_files(i,j):	
-	os.mkdir("Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/".format(i,j))
+	
+	if not(os.path.isdir("Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/".format(i,j))):
+		os.mkdir("Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/".format(i,j))
 	shutil.move("force_weights.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/lh_force_weights.npy".format(i,j))	
 	shutil.move("roll_pos.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/lh_roll_pos.npy".format(i,j))
 	shutil.move("roll_vel.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/lh_roll_vel.npy".format(i,j))	
@@ -17,7 +19,7 @@ def move_files(i,j):
 	shutil.move("roll_force.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/lh_roll_force.npy".format(i,j))
 	shutil.move("target_force.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Segment_{1}/OldBasis/lh_target_force.npy".format(i,j))
 
-for i in range(1,number_trajectories):
+for i in range(0,number_trajectories):
 	for j in range(0,int(number_segments[i])):
 
 		print("The Counter is OBL:",i,j)

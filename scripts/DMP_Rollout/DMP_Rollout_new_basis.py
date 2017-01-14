@@ -12,7 +12,7 @@ class DMP():
 		self.time_steps = time_steps
 		self.tau = self.time_steps
 
-		self.dimensions = 2
+		self.dimensions = 3
 		self.number_kernels = 100
 		self.gaussian_kernels = npy.zeros((self.number_kernels,2))
 
