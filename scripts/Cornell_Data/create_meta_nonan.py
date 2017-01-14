@@ -3,7 +3,7 @@
 from headers import *
 
 number_trajectories = 31
-number_segments = npy.load("Number_Segments.npy")
+number_segments = npy.load("Number_Segments.npy").astype(int)
 number_samples = number_segments.sum()
 
 # number_samples = 34
@@ -29,19 +29,19 @@ rh_ob_meta_rollout_file = npy.load("rh_ob_meta_rollout_file.npy")
 lh_nan_index = npy.where(npy.isnan(lh_nb_meta_weights_file[:,0,:]))[0]
 rh_nan_index = npy.where(npy.isnan(rh_nb_meta_weights_file[:,0,:]))[0]
 
-lh_nb_meta_weights = npy.zeros((number_samples-len(lh_nan_index),number_kernels,number_dimensions))
-lh_nb_meta_points = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
-lh_nb_meta_rollout = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
-lh_ob_meta_weights = npy.zeros((number_samples-len(lh_nan_index),number_kernels,number_dimensions))
-lh_ob_meta_points = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
-lh_ob_meta_rollout = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
+lh_nb_meta_weights = npy.zeros((number_samples-int(len(lh_nan_index)),number_kernels,number_dimensions))
+lh_nb_meta_points = npy.zeros((number_samples-int(len(lh_nan_index)),segment_length,number_dimensions))
+lh_nb_meta_rollout = npy.zeros((number_samples-int(len(lh_nan_index)),segment_length,number_dimensions))
+lh_ob_meta_weights = npy.zeros((number_samples-int(len(lh_nan_index)),number_kernels,number_dimensions))
+lh_ob_meta_points = npy.zeros((number_samples-int(len(lh_nan_index)),segment_length,number_dimensions))
+lh_ob_meta_rollout = npy.zeros((number_samples-int(len(lh_nan_index)),segment_length,number_dimensions))
 
-rh_nb_meta_weights = npy.zeros((number_samples-len(lh_nan_index),number_kernels,number_dimensions))
-rh_nb_meta_points = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
-rh_nb_meta_rollout = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
-rh_ob_meta_weights = npy.zeros((number_samples-len(lh_nan_index),number_kernels,number_dimensions))
-rh_ob_meta_points = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
-rh_ob_meta_rollout = npy.zeros((number_samples-len(lh_nan_index),segment_length,number_dimensions))
+rh_nb_meta_weights = npy.zeros((number_samples-int(len(rh_nan_index)),number_kernels,number_dimensions))
+rh_nb_meta_points = npy.zeros((number_samples-int(len(rh_nan_index)),segment_length,number_dimensions))
+rh_nb_meta_rollout = npy.zeros((number_samples-int(len(rh_nan_index)),segment_length,number_dimensions))
+rh_ob_meta_weights = npy.zeros((number_samples-int(len(rh_nan_index)),number_kernels,number_dimensions))
+rh_ob_meta_points = npy.zeros((number_samples-int(len(rh_nan_index)),segment_length,number_dimensions))
+rh_ob_meta_rollout = npy.zeros((number_samples-int(len(rh_nan_index)),segment_length,number_dimensions))
 
 # LH
 for i in range(number_samples):
