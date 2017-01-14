@@ -9,7 +9,7 @@ number_segments = npy.load("Number_Segments.npy")
 
 # ORIGINAL BASIS, LEFT
 def move_files(i,j):	
-	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/")
+	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/".format(i,j))
 	shutil.move("force_weights.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/lh_force_weights.npy".format(i,j))	
 	shutil.move("roll_pos.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/lh_roll_pos.npy".format(i,j))
 	shutil.move("roll_vel.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/lh_roll_vel.npy".format(i,j))	
@@ -27,7 +27,7 @@ for i in range(0,number_trajectories):
 
 # ORIGINAL BASIS, RIGHT
 def move_files(i,j):	
-	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/")
+	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/".format(i,j))
 	shutil.move("force_weights.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/rh_force_weights.npy".format(i,j))	
 	shutil.move("roll_pos.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/rh_roll_pos.npy".format(i,j))
 	shutil.move("roll_vel.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/rh_roll_vel.npy".format(i,j))	
@@ -45,7 +45,7 @@ for i in range(0,number_trajectories):
 
 # NEW BASIS, LEFT
 def move_files(i,j):	
-	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/")
+	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/".format(i,j))
 	shutil.move("force_weights.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/lh_force_weights.npy".format(i,j))	
 	shutil.move("roll_pos.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/lh_roll_pos.npy".format(i,j))
 	shutil.move("roll_vel.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/lh_roll_vel.npy".format(i,j))	
@@ -63,7 +63,7 @@ for i in range(0,number_trajectories):
 
 # ORIGINAL BASIS, RIGHT
 def move_files(i,j):	
-	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/")
+	os.mkdir("Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/".format(i,j))
 	shutil.move("force_weights.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/rh_force_weights.npy".format(i,j))	
 	shutil.move("roll_pos.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/rh_roll_pos.npy".format(i,j))
 	shutil.move("roll_vel.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/rh_roll_vel.npy".format(i,j))	
