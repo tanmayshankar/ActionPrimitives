@@ -27,7 +27,7 @@ rh_ob_weights = npy.load("Meta/rh_ob_meta_weights.npy")
 # NBL
 weights = copy.deepcopy(lh_nb_weights)
 print("NBL")
-if (npy.isnan(weights).any())
+if (npy.isnan(weights).any()):
 	print("BAD NBL")
 
 number_samples = weights.shape[0]
@@ -47,7 +47,7 @@ with file("nblh_embedded_weights.npy",'w') as outfile:
 # NBR
 weights = copy.deepcopy(rh_nb_weights)
 print("NBR")
-if (npy.isnan(weights).any())
+if (npy.isnan(weights).any()):
 	print("BAD NBR")
 
 number_samples = weights.shape[0]
@@ -65,7 +65,7 @@ with file("nbrh_embedded_weights.npy",'w') as outfile:
 # OBL
 weights = copy.deepcopy(lh_ob_weights)
 print("OBL")
-if (npy.isnan(weights).any())
+if (npy.isnan(weights).any()):
 	print("BAD OBL")
 
 number_samples = weights.shape[0]
@@ -84,7 +84,7 @@ with file("oblh_embedded_weights.npy",'w') as outfile:
 # OBR
 weights = copy.deepcopy(rh_ob_weights)
 print("OBR")
-if (npy.isnan(weights).any())
+if (npy.isnan(weights).any()):
 	print("BAD OBR")
 
 number_samples = weights.shape[0]
