@@ -73,7 +73,7 @@ with file("lh_ob_meta_rollout.npy",'w') as outfile:
 # RH
 counter = 0
 for i in range(number_samples):
-	if not(i in lh_nan_index):
+	if not(i in rh_nan_index):
 		rh_nb_meta_weights[counter] = rh_nb_meta_weights_file[i]
 		rh_nb_meta_points[counter] = rh_nb_meta_points_file[i]
 		rh_nb_meta_rollout[counter] = rh_nb_meta_rollout_file[i]
