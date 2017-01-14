@@ -18,7 +18,7 @@ def move_files(i,j):
 	shutil.move("target_force.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/lh_target_force.npy".format(i,j))
 
 for i in range(0,number_trajectories):
-	for j in range(0,number_segments[i]):
+	for j in range(0,int(number_segments[i])):
 
 		print("The Counter is OBL:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_acc.npy".format(i,j)
@@ -36,7 +36,7 @@ def move_files(i,j):
 	shutil.move("target_force.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/OldBasis/rh_target_force.npy".format(i,j))
 
 for i in range(0,number_trajectories):
-	for j in range(0,number_segments[i]):
+	for j in range(0,int(number_segments[i])):
 
 		print("The Counter is OBR:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_acc.npy".format(i,j)
@@ -54,7 +54,7 @@ def move_files(i,j):
 	shutil.move("target_force.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/lh_target_force.npy".format(i,j))
 
 for i in range(0,number_trajectories):
-	for j in range(0,number_segments[i]):
+	for j in range(0,int(number_segments[i])):
 
 		print("The Counter is NBL:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout_new_basis.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/lh_acc.npy".format(i,j)
@@ -72,7 +72,7 @@ def move_files(i,j):
 	shutil.move("target_force.npy","Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/NewBasis/rh_target_force.npy".format(i,j))
 
 for i in range(0,number_trajectories):
-	for j in range(0,number_segments[i]):
+	for j in range(0,int(number_segments[i])):
 
 		print("The Counter is NBR:",i,j)
 		command = "./scripts/DMP_Rollout/DMP_Rollout_new_basis.py Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_pos.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_vel.npy Data/Cornell_Data/Primitive_Library/Traj_{0}/Segment_{1}/rh_acc.npy".format(i,j)
