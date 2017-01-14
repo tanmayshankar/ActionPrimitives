@@ -86,8 +86,12 @@ class DMP():
 	def update_eta(self):        
 		t_range = npy.linspace(0,self.time_steps,self.time_steps)        
 		vector_phase = self.calc_vector_phase(t_range)        
-		self.eta[:,0] = vector_phase*(self.demo_pos[self.time_steps-1,0]-self.demo_pos[0,0])
-		self.eta[:,1] = vector_phase*(self.demo_pos[self.time_steps-1,1]-self.demo_pos[0,1])
+
+		for k in range(self.dimensions):
+			self.eta[:,k] = vector_phase*(self.demo_pos[self.time_steps-1,k]-self.demo_pos[0,k])
+
+		# self.eta[:,0] = vector_phase*(self.demo_pos[self.time_steps-1,0]-self.demo_pos[0,0])
+		# self.eta[:,1] = vector_phase*(self.demo_pos[self.time_steps-1,1]-self.demo_pos[0,1])
 
 	def learn_DMP(self):	
 		self.update_target_force_dtau()        
@@ -196,8 +200,8 @@ def main(args):
 	dmp.load_trajectory(pos,vel,acc)	
 	dmp.initialize_variables()
 	dmp.learn_DMP()
-	start = npy.zeros(2)	
-	goal = npy.ones(2)
+	start = npy.zeros(dmp.dimensions)	
+	goal = npy.ones(dmp.dimensions)
 	dmp.rollout(start, goal)
 	dmp.save_rollout()
 
