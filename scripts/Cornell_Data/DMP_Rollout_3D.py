@@ -57,8 +57,9 @@ class DMP():
 		self.gaussian_kernels[:,0] = self.vector_phase
 		
 		# dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
-		# self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
-		self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
+		dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
+		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
+		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
 
 	def calc_phase(self,time):
 		return npy.exp(-self.alpha*float(time)/self.tau)
@@ -92,7 +93,7 @@ class DMP():
 		# self.eta[:,1] = vector_phase*(self.demo_pos[self.time_steps-1,1]-self.demo_pos[0,1])
 
 	def learn_DMP(self):	
-		self.update_target_force_dtau()        
+		self.update_target_force_itau()        
 		self.update_phi()
 		self.update_eta()
 
@@ -184,11 +185,12 @@ class DMP():
 def main(args):    
 
 	dmp = DMP()	
-	pos = npy.load(str(sys.argv[1]))
-	vel = npy.load(str(sys.argv[2]))
-	acc = npy.load(str(sys.argv[3]))
+	pos = npy.load(str(sys.argv[1]))[:,:dmp.dimensions]
+	vel = npy.load(str(sys.argv[2]))[:,:dmp.dimensions]
+	acc = npy.load(str(sys.argv[3]))[:,:dmp.dimensions]
 
-	ts = 1000
+	# ts = 1000
+	ts = 1
 	# pos = pos[::10]
 	# vel = ts*vel[::10]
 	# acc = (ts**2)*acc[::10]
