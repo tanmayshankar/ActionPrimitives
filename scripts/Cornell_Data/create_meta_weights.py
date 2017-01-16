@@ -19,9 +19,9 @@ meta_rollout = npy.zeros((number_samples,segment_length,number_dimensions))
 for i in range(number_trajectories):
 	for j in range(int(number_segments[i])):
 
-		meta_weights[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/lh_force_weights.npy".format(i,j))
-		meta_points[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/lh_pos.npy".format(i,j))
-		meta_rollout[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/lh_roll_pos.npy".format(i,j))		
+		meta_weights[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/lh_force_weights.npy".format(i,j))[:,:3]
+		meta_points[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/lh_pos.npy".format(i,j))[:,:3]
+		meta_rollout[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/lh_roll_pos.npy".format(i,j))[:,:3]		
 
 with file("lh_nb_meta_weight_file.npy",'w') as outfile:
 	npy.save(outfile,meta_weights)
@@ -40,9 +40,9 @@ meta_rollout = npy.zeros((number_samples,segment_length,number_dimensions))
 for i in range(number_trajectories):
 	for j in range(int(number_segments[i])):
 
-		meta_weights[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/rh_force_weights.npy".format(i,j))
-		meta_points[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/rh_pos.npy".format(i,j))
-		meta_rollout[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/rh_roll_pos.npy".format(i,j))		
+		meta_weights[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/rh_force_weights.npy".format(i,j))[:,:3]
+		meta_points[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/rh_pos.npy".format(i,j))[:,:3]
+		meta_rollout[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/NewBasis/rh_roll_pos.npy".format(i,j))[:,:3]		
 
 with file("rh_nb_meta_weight_file.npy",'w') as outfile:
 	npy.save(outfile,meta_weights)
@@ -54,44 +54,44 @@ with file("rh_nb_meta_rollout_file.npy",'w') as outfile:
 	npy.save(outfile,meta_rollout)
 
 
-# OBL
-meta_weights = npy.zeros((number_samples,number_kernels,number_dimensions))
-meta_points = npy.zeros((number_samples,segment_length,number_dimensions))
-meta_rollout = npy.zeros((number_samples,segment_length,number_dimensions))
+# # OBL
+# meta_weights = npy.zeros((number_samples,number_kernels,number_dimensions))
+# meta_points = npy.zeros((number_samples,segment_length,number_dimensions))
+# meta_rollout = npy.zeros((number_samples,segment_length,number_dimensions))
 
-for i in range(number_trajectories):
-	for j in range(int(number_segments[i])):
+# for i in range(number_trajectories):
+# 	for j in range(int(number_segments[i])):
 
-		meta_weights[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/lh_force_weights.npy".format(i,j))
-		meta_points[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/lh_pos.npy".format(i,j))
-		meta_rollout[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/lh_roll_pos.npy".format(i,j))		
+# 		meta_weights[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/lh_force_weights.npy".format(i,j))[:,:3]
+# 		meta_points[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/lh_pos.npy".format(i,j))[:,:3]
+# 		meta_rollout[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/lh_roll_pos.npy".format(i,j))[:,:3]		
 
-with file("lh_ob_meta_weight_file.npy",'w') as outfile:
-	npy.save(outfile,meta_weights)
+# with file("lh_ob_meta_weight_file.npy",'w') as outfile:
+# 	npy.save(outfile,meta_weights)
 
-with file("lh_ob_meta_point_file.npy",'w') as outfile:
-	npy.save(outfile,meta_points)
+# with file("lh_ob_meta_point_file.npy",'w') as outfile:
+# 	npy.save(outfile,meta_points)
 
-with file("lh_ob_meta_rollout_file.npy",'w') as outfile:
-	npy.save(outfile,meta_rollout)
+# with file("lh_ob_meta_rollout_file.npy",'w') as outfile:
+# 	npy.save(outfile,meta_rollout)
 
-# OBR
-meta_weights = npy.zeros((number_samples,number_kernels,number_dimensions))
-meta_points = npy.zeros((number_samples,segment_length,number_dimensions))
-meta_rollout = npy.zeros((number_samples,segment_length,number_dimensions))
+# # OBR
+# meta_weights = npy.zeros((number_samples,number_kernels,number_dimensions))
+# meta_points = npy.zeros((number_samples,segment_length,number_dimensions))
+# meta_rollout = npy.zeros((number_samples,segment_length,number_dimensions))
 
-for i in range(number_trajectories):
-	for j in range(int(number_segments[i])):
+# for i in range(number_trajectories):
+# 	for j in range(int(number_segments[i])):
 
-		meta_weights[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/rh_force_weights.npy".format(i,j))
-		meta_points[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/rh_pos.npy".format(i,j))
-		meta_rollout[int(number_segments[:i]).sum()+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/rh_roll_pos.npy".format(i,j))		
+# 		meta_weights[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/rh_force_weights.npy".format(i,j))[:,:3]
+# 		meta_points[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/rh_pos.npy".format(i,j))[:,:3]
+# 		meta_rollout[int(number_segments[:i].sum())+j] = npy.load("Traj_{0}/Segment_{1}/OldBasis/rh_roll_pos.npy".format(i,j))[:,:3]		
 
-with file("rh_ob_meta_weight_file.npy",'w') as outfile:
-	npy.save(outfile,meta_weights)
+# with file("rh_ob_meta_weight_file.npy",'w') as outfile:
+# 	npy.save(outfile,meta_weights)
 
-with file("rh_ob_meta_point_file.npy",'w') as outfile:
-	npy.save(outfile,meta_points)
+# with file("rh_ob_meta_point_file.npy",'w') as outfile:
+# 	npy.save(outfile,meta_points)
 
-with file("rh_ob_meta_rollout_file.npy",'w') as outfile:
-	npy.save(outfile,meta_rollout)
+# with file("rh_ob_meta_rollout_file.npy",'w') as outfile:
+# 	npy.save(outfile,meta_rollout)

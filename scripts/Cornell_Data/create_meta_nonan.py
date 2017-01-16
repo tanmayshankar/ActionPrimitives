@@ -62,12 +62,12 @@ with file("lh_nb_meta_points.npy",'w') as outfile:
 with file("lh_nb_meta_rollout.npy",'w') as outfile:
 	npy.save(outfile,lh_nb_meta_rollout)
 
-with file("lh_ob_meta_weights.npy",'w') as outfile:
-	npy.save(outfile,lh_ob_meta_weights)
-with file("lh_ob_meta_points.npy",'w') as outfile:
-	npy.save(outfile,lh_ob_meta_points)
-with file("lh_ob_meta_rollout.npy",'w') as outfile:
-	npy.save(outfile,lh_ob_meta_rollout)
+# with file("lh_ob_meta_weights.npy",'w') as outfile:
+# 	npy.save(outfile,lh_ob_meta_weights)
+# with file("lh_ob_meta_points.npy",'w') as outfile:
+# 	npy.save(outfile,lh_ob_meta_points)
+# with file("lh_ob_meta_rollout.npy",'w') as outfile:
+# 	npy.save(outfile,lh_ob_meta_rollout)
 
 
 # RH
@@ -89,12 +89,12 @@ with file("rh_nb_meta_points.npy",'w') as outfile:
 with file("rh_nb_meta_rollout.npy",'w') as outfile:
 	npy.save(outfile,rh_nb_meta_rollout)
 
-with file("rh_ob_meta_weights.npy",'w') as outfile:
-	npy.save(outfile,rh_ob_meta_weights)
-with file("rh_ob_meta_points.npy",'w') as outfile:
-	npy.save(outfile,rh_ob_meta_points)
-with file("rh_ob_meta_rollout.npy",'w') as outfile:
-	npy.save(outfile,rh_ob_meta_rollout)
+# with file("rh_ob_meta_weights.npy",'w') as outfile:
+# 	npy.save(outfile,rh_ob_meta_weights)
+# with file("rh_ob_meta_points.npy",'w') as outfile:
+# 	npy.save(outfile,rh_ob_meta_points)
+# with file("rh_ob_meta_rollout.npy",'w') as outfile:
+# 	npy.save(outfile,rh_ob_meta_rollout)
 
 
 
