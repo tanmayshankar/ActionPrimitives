@@ -1,0 +1,11 @@
+1204144410,1,61,null,stationary,stationary,stationary,stationary
+1204144410,62,100,reaching,stationary,stationary,stationary,reachable
+1204144410,101,144,moving,stationary,stationary,stationary,placeable
+1204144410,145,198,placing,stationary,stationary,stationary,placeable
+1204144410,199,236,reaching,reachable,stationary,stationary,stationary
+1204144410,237,312,moving,movable,stationary,stationary,stationary
+1204144410,313,360,placing,placeable,stationary,stationary,stationary
+1204144410,361,400,reaching,stationary,reachable,stationary,stationary
+1204144410,401,462,moving,stationary,movable,stationary,stationary
+1204144410,463,506,placing,stationary,placeable,stationary,stationary
+1204144410,507,548,null,stationary,stationary,stationary,stationary
