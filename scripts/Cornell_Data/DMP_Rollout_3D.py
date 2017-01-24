@@ -116,7 +116,7 @@ class DMP():
 	def calc_rollout_pos(self,time):
 		self.pos_roll[time] = self.pos_roll[time-1] + self.vel_roll[time-1]*self.dt
 
-	def rollout(self,start,goal):
+	def rollout(self,start,goal,init_vel):
 
 		# For all time: 
 		self.initialize_rollout(start,goal,init_vel)
