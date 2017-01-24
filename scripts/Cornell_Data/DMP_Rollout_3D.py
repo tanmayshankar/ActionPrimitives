@@ -13,7 +13,7 @@ class DMP():
 		self.tau = self.time_steps
 
 		self.dimensions = 3
-		self.number_kernels = 100
+		self.number_kernels = max(1000,self.time_steps)
 		self.gaussian_kernels = npy.zeros((self.number_kernels,2))
 
 		self.weights = npy.zeros((self.number_kernels, self.dimensions))
@@ -28,15 +28,12 @@ class DMP():
 		self.vector_phase = npy.zeros(self.time_steps)
         
 # Defining Rollout variables.
-		self.rollout_time = self.time_steps
+		self.rollout_time = max(200,self.time_steps)
 		self.dt = 1./self.rollout_time
 		self.pos_roll = npy.zeros((self.rollout_time,self.dimensions))
 		self.vel_roll = npy.zeros((self.rollout_time,self.dimensions))
 		self.acc_roll = npy.zeros((self.rollout_time,self.dimensions))
 		self.force_roll = npy.zeros((self.rollout_time,self.dimensions))        
-		self.pos_var = npy.zeros(self.dimensions)
-		self.vel_var = npy.zeros(self.dimensions)
-		self.acc_var = npy.zeros(self.dimensions)        		
 		self.goal = npy.zeros(self.dimensions)
 		self.start = npy.zeros(self.dimensions)        
 
@@ -52,12 +49,11 @@ class DMP():
 		self.eta = npy.zeros((self.time_steps, self.dimensions))
 
 		t_range = npy.linspace(0,self.time_steps,self.number_kernels)
-# 		t_range_2 = npy.linspace(0,self.time_steps,self.time_steps)        
 		self.vector_phase = self.calc_vector_phase(t_range)
 		self.gaussian_kernels[:,0] = self.vector_phase
 		
-		# dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
-		dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
+		dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
+		# dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
 		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
 		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
 
@@ -70,14 +66,8 @@ class DMP():
 	def basis(self,index,time):
 		return npy.exp(-(self.gaussian_kernels[index,1])*((self.calc_phase(time)-self.gaussian_kernels[index,0])**2))
 
-	def update_target_force(self):
-		self.target_forces = self.demo_acc - self.alphaz*(self.betaz*(self.demo_pos[self.time_steps-1]-self.demo_pos)-self.demo_vel)
-    
   	def update_target_force_itau(self):
 		self.target_forces = (self.tau**2)*self.demo_acc - self.alphaz*(self.betaz*(self.demo_pos[self.time_steps-1]-self.demo_pos)-self.tau*self.demo_vel)
-        
-  	def update_target_force_dtau(self):
-		self.target_forces = self.demo_acc/(self.tau**2) - self.alphaz*(self.betaz*(self.demo_pos[self.time_steps-1]-self.demo_pos)-self.demo_vel/self.tau)    
 
 	def update_phi(self):		
 		for i in range(self.number_kernels):
@@ -90,7 +80,6 @@ class DMP():
 
 		for k in range(self.dimensions):
 			self.eta[:,k] = vector_phase*(self.demo_pos[self.time_steps-1,k]-self.demo_pos[0,k])
-		# self.eta[:,1] = vector_phase*(self.demo_pos[self.time_steps-1,1]-self.demo_pos[0,1])
 
 	def learn_DMP(self):	
 		self.update_target_force_itau()        
@@ -101,63 +90,43 @@ class DMP():
 			for i in range(self.number_kernels):
 				self.weights[i,j] = npy.dot(self.eta[:,j],npy.dot(self.phi[i],self.target_forces[:,j]))
 				self.weights[i,j] /= npy.dot(self.eta[:,j],npy.dot(self.phi[i],self.eta[:,j]))
-
-	def save_DMP_parameters(self,file_suffix):
-
-		with file("force_weights_{0}.npy".format(file_suffix),'w') as outfile:
-			npy.save(outfile,self.weights)
-	
-		with file("position_{0}.npy".format(file_suffix),'w') as outfile:
-			npy.save(outfile, self.demo_pos)
-            
-	def shebang(self,pos,vel,acc):
-		dmp.load_trajectory(pos,vel,acc)
-		dmp.initialize_variables()
-		dmp.learn_DMP()    
-        
-	def initialize_rollout(self,start,goal):
-		self.tau = 1
-		self.pos_var = copy.deepcopy(start)
+      
+	def initialize_rollout(self,start,goal,init_vel):
+		self.tau = self.rollout_time		
 		self.pos_roll[0] = copy.deepcopy(start)
-		self.vel_var = npy.zeros(self.dimensions)
-		self.vel_roll = npy.zeros((self.rollout_time,self.dimensions))        
+		self.vel_roll[0] = copy.deepcopy(init_vel)
 		self.goal = goal
 		self.start = start
-# 		self.dt = self.tau/self.rollout_time   
-		self.dt = 1./self.rollout_time    
+		self.dt = self.tau/self.rollout_time   		
 
 	def calc_rollout_force(self,roll_time):
-		den = 0        
-		time = float(roll_time)/self.rollout_time
-# 		time = roll_time        
-		# print(roll_time,time,self.calc_phase(time))
+		den = 0        		
+		time = roll_time        
 		for i in range(self.number_kernels):
 			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            
 			den += self.basis(i,time)
-		self.force_roll[roll_time] *= (self.goal-self.pos_roll[0])*self.calc_phase(time)/den
+		self.force_roll[roll_time] *= (self.goal-self.start)*self.calc_phase(time)/den
         
 	def calc_rollout_acceleration(self,time):        
-		self.acc_var = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_var) - self.tau*self.vel_var) + self.force_roll[time])
-		self.acc_roll[time] = copy.deepcopy(self.acc_var)
+		self.acc_roll[time] = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_roll[time]) - self.tau*self.vel_roll[time]) + self.force_roll[time])
         
-	def calc_rollout_vel(self,time):
-		self.vel_var += (1/self.tau)*self.acc_var*self.dt
-		self.vel_roll[time] = copy.deepcopy(self.vel_var)
+	def calc_rollout_vel(self,time):		
+		self.vel_roll[time] = self.vel_roll[time-1] + self.acc_roll[time-1]*self.dt
 
 	def calc_rollout_pos(self,time):
-		self.pos_var += self.vel_var * self.dt
-# 		self.pos_var += self.vel_var*self.dt + 0.5*self.acc_var*(self.dt**2)
-		self.pos_roll[time] = copy.deepcopy(self.pos_var)
+		self.pos_roll[time] = self.pos_roll[time-1] + self.vel_roll[time-1]*self.dt
 
 	def rollout(self,start,goal):
 
 		# For all time: 
-		self.initialize_rollout(start,goal)
-		for i in range(self.rollout_time):        
-			self.calc_rollout_force(i)
-			self.calc_rollout_acceleration(i)
-			self.calc_rollout_vel(i)
-			self.calc_rollout_pos(i)   
+		self.initialize_rollout(start,goal,init_vel)
+		self.calc_rollout_force(0)
+		self.calc_rollout_acceleration(0)
+		for t in range(1,self.rollout_time):        
+			self.calc_rollout_force(t)		
+			self.calc_rollout_vel(t)
+			self.calc_rollout_pos(t)   
+			self.calc_rollout_acceleration(t)
 
 	def save_rollout(self):
 
