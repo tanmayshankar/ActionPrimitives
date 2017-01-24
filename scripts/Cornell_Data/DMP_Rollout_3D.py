@@ -158,20 +158,16 @@ def main(args):
 	vel = npy.load(str(sys.argv[2]))[:,:dmp.dimensions]
 	acc = npy.load(str(sys.argv[3]))[:,:dmp.dimensions]
 
-	# ts = 1000
-	ts = 1
-	# pos = pos[::10]
-	# vel = ts*vel[::10]
-	# acc = (ts**2)*acc[::10]
-	vel *= ts
-	acc *= ts**2
-
-	dmp.load_trajectory(pos,vel,acc)	
+	dmp.load_trajectory(pos,vel,acc)		
 	dmp.initialize_variables()
 	dmp.learn_DMP()
+	
 	start = npy.zeros(dmp.dimensions)	
 	goal = npy.ones(dmp.dimensions)
-	dmp.rollout(start, goal)
+	norm_vector = pos[-1]-pos[0]
+	init_vel = npy.divide(vel[0],norm_vector)
+
+	dmp.rollout(start, goal, init_vel)
 	dmp.save_rollout()
 
 if __name__ == '__main__':
