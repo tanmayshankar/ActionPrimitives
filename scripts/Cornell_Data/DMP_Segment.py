@@ -168,7 +168,7 @@ class DMP():
 		    force_dot_prod[t] = npy.dot(normalized_forces[t],normalized_forces[t+1])		    
 
 		self.segmentation_candidates = npy.argsort(force_dot_prod)[0:self.number_segment_candidates]
-		print(self.segmentation_candidates)
+		# print(self.segmentation_candidates)
 		seg_indices = npy.array(self.segmentation_candidates[0])
 		seg_indices = seg_indices.reshape(1,-1)
 		# print(seg_indices)
@@ -184,10 +184,10 @@ class DMP():
 		seg_indices = npy.append(0,seg_indices)
 		seg_indices = npy.append(seg_indices,self.time_steps)
 
-		with file("Segmentation_Indices.npy",'w') as outfile:
+		with file("seg_indices.npy",'w') as outfile:
 			npy.save(outfile,seg_indices)
 
-		print("Segment Indices:",seg_indices)
+		# print("Segment Indices:",seg_indices)
 
 def main(args):    
 
