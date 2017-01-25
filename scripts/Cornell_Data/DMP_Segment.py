@@ -194,9 +194,7 @@ def main(args):
 	i1 = 0
 	
 	pos1 = npy.load(str(sys.argv[1]))[:,:3]
-
-	i2 = int(len(pos1)*0.8)
-
+	i2 = int(len(pos1))
 	pos = npy.load(str(sys.argv[1]))[i1:i2,:3]
 	vel = npy.load(str(sys.argv[2]))[i1:i2,:3]
 	acc = npy.load(str(sys.argv[3]))[i1:i2,:3]
