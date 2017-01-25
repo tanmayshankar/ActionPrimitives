@@ -28,7 +28,7 @@ class DMP():
 		self.vector_phase = npy.zeros(self.time_steps)
         
 # Defining Rollout variables.
-		self.rollout_time = max(200,self.time_steps)
+		self.rollout_time = self.time_steps
 		self.dt = 1./self.rollout_time
 		self.pos_roll = npy.zeros((self.rollout_time,self.dimensions))
 		self.vel_roll = npy.zeros((self.rollout_time,self.dimensions))
