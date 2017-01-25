@@ -187,6 +187,9 @@ class DMP():
 		with file("seg_indices.npy",'w') as outfile:
 			npy.save(outfile,seg_indices)
 
+		with file("seg_candidates.npy",'w') as outfile:
+			npy.save(outfile,self.segmentation_candidates)
+
 		# print("Segment Indices:",seg_indices)
 
 def main(args):    

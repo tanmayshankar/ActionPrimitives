@@ -41,6 +41,7 @@ def move_files(i):
 	shutil.move("roll_force.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/lh_roll_force.npy".format(i))
 	shutil.move("target_force.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/lh_target_force.npy".format(i))
 	shutil.move("seg_indices.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/lh_seg_indices.npy".format(i))	
+	shutil.move("seg_candidates.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/lh_seg_candidates.npy".format(i))		
 
 for i in range(0,number_trajectories):	
 	print("The Counter is LEFT:",i)
@@ -56,6 +57,7 @@ def move_files(i):
 	shutil.move("roll_force.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/rh_roll_force.npy".format(i))
 	shutil.move("target_force.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/rh_target_force.npy".format(i))
 	shutil.move("seg_indices.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/rh_seg_indices.npy".format(i))	
+	shutil.move("seg_candidates.npy","Data/Cornell_Data/Primitive_Library/Subject1/Traj_{0}/Comp_Seg_Full/rh_seg_candidates.npy".format(i))			
 
 for i in range(0,number_trajectories):	
 	print("The Counter is RIGHT:",i)
