@@ -9,13 +9,13 @@ lh_seg_inds = npy.load("LH_Seg_Inds.npy")
 rh_seg_inds = npy.load("RH_Seg_Inds.npy")
 
 image_paths = npy.load("IMAGE_PATHS.npy")
-num_files = 4
+num_files = 14
 seg = 0
 window = 10
 
 for i in range(num_files-1,num_files):
-	for k in range(len(lh_seg_inds[i])-1):
-		for t in range(lh_seg_inds[i][k],lh_seg_inds[i][k+1]):
+	for k in range(len(rh_seg_inds[i])-1):
+		for t in range(rh_seg_inds[i][k],rh_seg_inds[i][k+1]):
 			
 			margin = 0
 			print(i,t)
@@ -26,13 +26,13 @@ for i in range(num_files-1,num_files):
 
 			# cv2.rectangle(label,(0,400),(640,480),(0,0,255),-1)
 			cv2.rectangle(label,(0,400),(640,480),(255*(k%2),0,255*((k+1)%2)),-1)				
-			cv2.putText(label,"Time: {0} Segment: {1} Next: {2}".format(t,k,lh_seg_inds[i][k+1]),(90,450),cv2.FONT_ITALIC,0.9,(255,255,255),3)
+			cv2.putText(label,"Time: {0} Segment: {1} Next: {2}".format(t,k,rh_seg_inds[i][k+1]),(90,450),cv2.FONT_ITALIC,0.9,(255,255,255),3)
 
 			cv2.addWeighted(label,0.5,img,0.5,0,img)		
-			cv2.imshow("Frame",img)
-			cv2.moveWindow("Frame",900,900)
+			cv2.imshow("Left Hand Frame",img)
+			cv2.moveWindow("Left Hand Frame",900,900)
 			
-			if (abs(lh_seg_inds[i][k]-t)<window)or(abs(lh_seg_inds[i][k+1]-t)<window):				
+			if (abs(rh_seg_inds[i][k]-t)<window)or(abs(rh_seg_inds[i][k+1]-t)<window):				
 				margin = 80
 			cv2.waitKey(5+margin)
 	

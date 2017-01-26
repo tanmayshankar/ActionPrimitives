@@ -9,7 +9,7 @@ lh_seg_inds = npy.load("LH_Seg_Inds.npy")
 rh_seg_inds = npy.load("RH_Seg_Inds.npy")
 
 image_paths = npy.load("IMAGE_PATHS.npy")
-num_files = 4
+num_files = 6
 seg = 0
 window = 10
 
@@ -33,8 +33,8 @@ for i in range(num_files-1,num_files):
 			cv2.moveWindow("Frame",900,900)
 			
 			if (abs(lh_seg_inds[i][k]-t)<window)or(abs(lh_seg_inds[i][k+1]-t)<window):				
-				margin = 80
-			cv2.waitKey(5+margin)
+				margin = 60
+			cv2.waitKey(10+margin)
 	
 	cv2.destroyAllWindows()
 

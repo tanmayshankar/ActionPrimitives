@@ -29,8 +29,8 @@ for i in range(num_files-1,num_files):
 			cv2.putText(label,"Time: {0} Segment: {1} Next: {2}".format(t,k,lh_seg_inds[i][k+1]),(90,450),cv2.FONT_ITALIC,0.9,(255,255,255),3)
 
 			cv2.addWeighted(label,0.5,img,0.5,0,img)		
-			cv2.imshow("Frame",img)
-			cv2.moveWindow("Frame",900,900)
+			cv2.imshow("Right Hand Frame",img)
+			cv2.moveWindow("Right Hand Frame",900,900)
 			
 			if (abs(lh_seg_inds[i][k]-t)<window)or(abs(lh_seg_inds[i][k+1]-t)<window):				
 				margin = 80
