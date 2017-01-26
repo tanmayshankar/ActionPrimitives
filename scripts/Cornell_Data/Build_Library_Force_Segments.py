@@ -2,8 +2,8 @@
 from headers import *
 
 number_trajectories = 31
-lhns = npy.load("LH_Number_Force_Segments.npy")
-rhns = npy.load("RH_Number_Force_Segments.npy")
+lhns = npy.load("Data/Cornell_Data/Primitive_Library/Subject1/LH_Number_Force_Segments.npy")
+rhns = npy.load("Data/Cornell_Data/Primitive_Library/Subject1/RH_Number_Force_Segments.npy")
 
 # NEW BASIS, LEFT
 def move_files(i,j):	
