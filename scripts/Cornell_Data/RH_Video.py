@@ -30,11 +30,11 @@ for i in range(num_files-1,num_files):
 
 			cv2.addWeighted(label,0.5,img,0.5,0,img)		
 			cv2.imshow("Right Hand Frame",img)
-			cv2.moveWindow("Right Hand Frame",900,900)
+			cv2.moveWindow("Right Hand Frame",900,500)
 			
 			if (abs(lh_seg_inds[i][k]-t)<window)or(abs(lh_seg_inds[i][k+1]-t)<window):				
-				margin = 80
-			cv2.waitKey(5+margin)
+				margin = 0
+			cv2.waitKey(40+margin)
 	
 	cv2.destroyAllWindows()
 

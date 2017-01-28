@@ -9,7 +9,7 @@ lh_seg_inds = npy.load("LH_Seg_Inds.npy")
 rh_seg_inds = npy.load("RH_Seg_Inds.npy")
 
 image_paths = npy.load("IMAGE_PATHS.npy")
-num_files = 6
+num_files = 6 
 seg = 0
 window = 10
 

@@ -37,6 +37,11 @@ class DMP():
 		self.goal = npy.zeros(self.dimensions)
 		self.start = npy.zeros(self.dimensions)        
 
+		self.number_segment_candidates = 10
+		self.segmentation_candidates = npy.zeros(self.number_segment_candidates)		
+		# 10 Percent of Rollout time.
+		self.window = int(0.1*self.rollout_time)
+
 	def load_trajectory(self,pos,vel,acc):
 		self.demo_pos = copy.deepcopy(pos)
 		self.demo_vel = copy.deepcopy(vel)
@@ -150,6 +155,27 @@ class DMP():
 
 	def load_weights(self, weight):
 		self.weights = copy.deepcopy(weight)	
+
+	def calc_segmentation_indices(self):
+		
+		force_norm = npy.linalg.norm(self.force_roll,axis=1)
+		normalized_forces = copy.deepcopy(self.force_roll)
+
+		for k in range(self.dimensions):
+		    normalized_forces[:,k] /= force_norm
+
+		force_dot_prod = npy.zeros(self.rollout_time-1)
+
+		for t in range(self.rollout_time-1):
+		    force_dot_prod[t] = npy.dot(normalized_forces[t],normalized_forces[t+1])		    
+
+		self.segmentation_candidates = npy.argsort(force_dot_prod)[0:self.number_segment_candidates]
+
+		seg_indices = npy.array([])
+		
+		
+		with file("Segmentation_Indices.npy",'w') as outfile:
+			npy.save(outfile,seg_indices)
 
 def main(args):    
 
