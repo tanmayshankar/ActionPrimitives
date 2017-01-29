@@ -218,6 +218,5 @@ def main(args):
 
 	dmp.calc_segmentation_indices()
 
-
 if __name__ == '__main__':
     main(sys.argv)

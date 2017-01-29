@@ -26,7 +26,6 @@ for i in range(num_files):
 	with file("Traj_{0}/Comp_Seg_Full/lh_seg_can_30.npy".format(i),'w') as outfile:
 		npy.save(outfile,seg_can)
 
-
 	# NOW FOR RIGHT:
 	rforce = npy.load("Traj_{0}/Comp_Seg_Full/rh_roll_force.npy".format(i))
 
