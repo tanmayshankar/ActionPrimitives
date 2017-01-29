@@ -20,7 +20,7 @@ def move_files(i,j):
 for i in range(0,number_trajectories):	
 	for j in range(lhns[i]):
 		print("The Counter is L:",i,j)
-		command = "./scripts/Cornell_Data/DMP_Segment.py Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_pos.npy Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_vel.npy Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_acc.npy".format(i,j)
+		command = "./../../../../scripts/Cornell_Data/DMP_Segment.py Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_pos.npy Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_vel.npy Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_acc.npy".format(i,j)
 		subprocess.call(command.split(),shell=False)
 		move_files(i,j)
 
@@ -37,7 +37,7 @@ def move_files(i,j):
 for i in range(0,number_trajectories):
 	for j in range(rhns[i]):
 		print("The Counter is R:",i,j)
-		command = "./scripts/Cornell_Data/DMP_Segment.py Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_pos.npy Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_vel.npy Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_acc.npy".format(i,j)
+		command = "./../../../../scripts/Cornell_Data/DMP_Segment.py Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_pos.npy Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_vel.npy Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_acc.npy".format(i,j)
 		subprocess.call(command.split(),shell=False)
 		move_files(i,j)
 
