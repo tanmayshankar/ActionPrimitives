@@ -9,7 +9,7 @@ rhi = npy.load("RH_Seg_Inds.npy")
 
 for i in range(num_files):
 	for j in range(rhns[i]):
-
+		print("Index: RIGHT:",i,j)
 		ipos = npy.zeros((interp_time_points+2,3))
 		ivel = npy.zeros((interp_time_points,3))
 		iacc = npy.zeros((interp_time_points,3))
@@ -30,13 +30,13 @@ for i in range(num_files):
 		ipos = ipos[:interp_time_points]
 
 		with file("Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_pos.npy".format(i,j),'w') as outfile:
-			npy.save(outfile,seg_pos)
+			npy.save(outfile,ipos)
 
 		with file("Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_vel.npy".format(i,j),'w') as outfile:
-			npy.save(outfile,seg_vel)
+			npy.save(outfile,ivel)
 
 		with file("Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_acc.npy".format(i,j),'w') as outfile:
-			npy.save(outfile,seg_acc) 
+			npy.save(outfile,iacc) 
 
 
 lhns = npy.load("LH_Num_Seg_Interp.npy")		
@@ -44,6 +44,8 @@ lhi = npy.load("LH_Seg_Inds.npy")
 
 for i in range(num_files):
 	for j in range(lhns[i]):
+
+		print("Index: LEFT:",i,j)
 
 		ipos = npy.zeros((interp_time_points+2,3))
 		ivel = npy.zeros((interp_time_points,3))
@@ -65,10 +67,10 @@ for i in range(num_files):
 		ipos = ipos[:interp_time_points]
 
 		with file("Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_pos.npy".format(i,j),'w') as outfile:
-			npy.save(outfile,seg_pos)
+			npy.save(outfile,ipos)
 
 		with file("Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_vel.npy".format(i,j),'w') as outfile:
-			npy.save(outfile,seg_vel)
+			npy.save(outfile,ivel)
 
 		with file("Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_acc.npy".format(i,j),'w') as outfile:
-			npy.save(outfile,seg_acc) 
+			npy.save(outfile,iacc) 
