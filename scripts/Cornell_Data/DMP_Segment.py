@@ -197,7 +197,7 @@ def main(args):
 	pos = npy.load(str(sys.argv[1]))[:,:3]
 	vel = npy.load(str(sys.argv[2]))[:,:3]
 	acc = npy.load(str(sys.argv[3]))[:,:3]
-
+	
 	dmp = DMP(len(pos))
 
 	dmp.load_trajectory(pos,vel,acc)		
