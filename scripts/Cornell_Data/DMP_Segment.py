@@ -57,8 +57,8 @@ class DMP():
 		self.vector_phase = self.calc_vector_phase(t_range)
 		self.gaussian_kernels[:,0] = self.vector_phase
 		
-		# dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
-		dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
+		dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
+		# dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
 		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
 		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
 
@@ -195,7 +195,6 @@ class DMP():
 def main(args):    
 
 	i1 = 0
-	
 	pos1 = npy.load(str(sys.argv[1]))[:,:3]
 	i2 = int(len(pos1))
 	pos = npy.load(str(sys.argv[1]))[i1:i2,:3]
@@ -216,7 +215,7 @@ def main(args):
 	dmp.rollout(start, goal, init_vel)
 	dmp.save_rollout()
 
-	dmp.calc_segmentation_indices()
+	# dmp.calc_segmentation_indices()
 
 if __name__ == '__main__':
     main(sys.argv)
