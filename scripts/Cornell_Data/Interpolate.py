@@ -41,10 +41,10 @@ for i in range(num_files):
 		ipos[:,0] = pos_fx(tr_new)
 
 		pos_fy = interp1d(tr,pos[:,1],kind='linear')
-		ipos[:,1] = pos_fx(tr_new)
+		ipos[:,1] = pos_fy(tr_new)
 
 		pos_fz = interp1d(tr,pos[:,2],kind='linear')
-		ipos[:,2] = pos_fx(tr_new)
+		ipos[:,2] = pos_fz(tr_new)
 
 		ivel = npy.diff(ipos,axis=0)[:interp_time_points]
 		iacc = npy.diff(ipos,axis=0,n=2)[:interp_time_points]
@@ -87,10 +87,10 @@ for i in range(num_files):
 		ipos[:,0] = pos_fx(tr_new)
 
 		pos_fy = interp1d(tr,pos[:,1],kind='linear')
-		ipos[:,1] = pos_fx(tr_new)
+		ipos[:,1] = pos_fy(tr_new)
 
 		pos_fz = interp1d(tr,pos[:,2],kind='linear')
-		ipos[:,2] = pos_fx(tr_new)
+		ipos[:,2] = pos_fz(tr_new)
 
 		ivel = npy.diff(ipos,axis=0)[:interp_time_points]
 		iacc = npy.diff(ipos,axis=0,n=2)[:interp_time_points]
