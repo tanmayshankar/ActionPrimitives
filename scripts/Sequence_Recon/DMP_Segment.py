@@ -13,7 +13,8 @@ class DMP():
 		self.tau = self.time_steps
 
 		self.dimensions = 3
-		self.number_kernels = max(500,self.time_steps)
+		# self.number_kernels = max(500,self.time_steps)
+		self.number_kernels = 500
 		self.gaussian_kernels = npy.zeros((self.number_kernels,2))
 
 		self.weights = npy.zeros((self.number_kernels, self.dimensions))
@@ -26,6 +27,7 @@ class DMP():
 		self.phi = npy.zeros((self.number_kernels, self.time_steps, self.time_steps))
 		self.eta = npy.zeros((self.time_steps, self.dimensions))
 		self.vector_phase = npy.zeros(self.time_steps)
+		print("Hello")
         
 # Defining Rollout variables.
 		self.rollout_time = self.time_steps
@@ -111,7 +113,19 @@ class DMP():
 			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            
 			den += self.basis(i,time)
 		self.force_roll[roll_time] *= (self.goal-self.start)*self.calc_phase(time)/den
-        
+
+		return self.force_roll[roll_time]
+
+	def calc_rollout_force_time(self,roll_time,start,goal):
+		den = 0        		
+		time = roll_time        
+		for i in range(self.number_kernels):
+			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            
+			den += self.basis(i,time)
+		self.force_roll[roll_time] *= (goal-start)*self.calc_phase(time)/den
+		print(self.force_roll[roll_time])
+		return self.force_roll[roll_time]
+
 	def calc_rollout_acceleration(self,time):        
 		self.acc_roll[time] = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_roll[time]) - self.tau*self.vel_roll[time]) + self.force_roll[time])
         
@@ -132,6 +146,16 @@ class DMP():
 			self.calc_rollout_vel(t)
 			self.calc_rollout_pos(t)   
 			self.calc_rollout_acceleration(t)
+
+	def rollout_time(self,start,goal,init_vel,frac_time):
+		self.initialize_rollout(start,goal,init_vel)
+		self.calc_rollout_force(0)
+		self.calc_rollout_acceleration(0)
+		for t in range(1,int(self.rollout_time*frac_time)):        
+			self.calc_rollout_force(t)		
+			self.calc_rollout_vel(t)
+			self.calc_rollout_pos(t)   
+			self.calc_rollout_acceleration(t)		
 
 	def save_rollout(self):
 
