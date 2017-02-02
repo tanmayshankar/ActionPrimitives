@@ -211,8 +211,7 @@ def main(args):
 	norm_vector = pos[-1]-pos[0]
 	init_vel = npy.divide(vel[0],norm_vector)	
 
-	dmp.rollout(start, goal, init_vel)
-	print(dmp.pos_roll)
+	dmp.rollout(start, goal, init_vel)	
 	dmp.save_rollout()
 
 if __name__ == '__main__':
