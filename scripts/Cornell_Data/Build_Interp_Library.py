@@ -18,8 +18,7 @@ def move_files(i,j):
 	shutil.move("target_force.npy","Traj_{0}/Interp_100_Basis/LH_Segment_{1}/target_force.npy".format(i,j))
 
 for i in range(0,number_trajectories):	
-# for i in range(1):
-	for j in range(lhns[i]):
+	for j in range(lhns[i]):	
 		print("The Counter is L:",i,j)
 		command = "./../../../../scripts/Cornell_Data/DMP_Segment.py Traj_{0}/Interp_100_Basis/LH_Segment_{1}/interp_demo_pos.npy Traj_{0}/Interp_100_Basis/LH_Segment_{1}/interp_demo_vel.npy Traj_{0}/Interp_100_Basis/LH_Segment_{1}/interp_demo_acc.npy".format(i,j)
 		subprocess.call(command.split(),shell=False)

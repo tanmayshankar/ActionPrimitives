@@ -105,17 +105,18 @@ class DMP():
 		self.goal = goal
 		self.start = start
 		self.dt = self.tau/self.rollout_time   		
+		# print(self.dt,self.tau,self.rollout_time)
 
 	def calc_rollout_force(self,roll_time):
 		den = 0        		
-		time = roll_time        
+		time = copy.deepcopy(roll_time)
 		for i in range(self.number_kernels):
 			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            
 			den += self.basis(i,time)
 		self.force_roll[roll_time] *= (self.goal-self.start)*self.calc_phase(time)/den
         
 	def calc_rollout_acceleration(self,time):        
-		self.acc_roll[time] = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_roll[time]) - self.tau*self.vel_roll[time]) + self.force_roll[time])
+		self.acc_roll[time] = (1./self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_roll[time]) - self.tau*self.vel_roll[time]) + self.force_roll[time])
         
 	def calc_rollout_vel(self,time):		
 		self.vel_roll[time] = self.vel_roll[time-1] + self.acc_roll[time-1]*self.dt
@@ -124,16 +125,15 @@ class DMP():
 		self.pos_roll[time] = self.pos_roll[time-1] + self.vel_roll[time-1]*self.dt
 
 	def rollout(self,start,goal,init_vel):
-
-		# For all time: 
+	
 		self.initialize_rollout(start,goal,init_vel)
 		self.calc_rollout_force(0)
 		self.calc_rollout_acceleration(0)
-		for t in range(1,self.rollout_time):        
-			self.calc_rollout_force(t)		
-			self.calc_rollout_vel(t)
-			self.calc_rollout_pos(t)   
-			self.calc_rollout_acceleration(t)
+		for i in range(1,self.rollout_time):        
+			self.calc_rollout_force(i)		
+			self.calc_rollout_vel(i)
+			self.calc_rollout_pos(i)   
+			self.calc_rollout_acceleration(i)
 
 	def save_rollout(self):
 
@@ -210,10 +210,10 @@ def main(args):
 	goal = npy.ones(dmp.dimensions)
 	norm_vector = pos[-1]-pos[0]
 	init_vel = npy.divide(vel[0],norm_vector)	
-	dmp.rollout(start, goal, init_vel)
-	dmp.save_rollout()
 
-	# dmp.calc_segmentation_indices()
+	dmp.rollout(start, goal, init_vel)
+	print(dmp.pos_roll)
+	dmp.save_rollout()
 
 if __name__ == '__main__':
     main(sys.argv)
