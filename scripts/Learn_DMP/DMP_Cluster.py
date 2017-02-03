@@ -7,7 +7,7 @@ points1 = npy.load(str(sys.argv[2]))
 rollout1 = npy.load(str(sys.argv[3]))
 
 number_trajectories = 20
-number_segments = 19
+number_segments = 37
 number_samples = number_segments*number_trajectories
 number_kernels = 100
 number_dimensions = 2
@@ -80,7 +80,7 @@ embedded_points = model.fit_transform(points.reshape(number_samples,segment_leng
 
 def plot_and_save(to_plot,color,title,name):
 	plt.scatter(to_plot[:,0],to_plot[:,1],c=color,s=400)
-	plt.title(str(title))
+	plt.title(str(title))g
 	plt.colorbar()
 	manager = plt.get_current_fig_manager()
 	manager.resize(*manager.window.maxsize())

@@ -3,7 +3,7 @@ from headers import *
 import sklearn.manifold as skl_manifold
 
 number_trajectories = 31
-number_kernels = 500
+number_kernels = 100
 number_dimensions = 3
 segment_length = 500
 number_clusters = 40

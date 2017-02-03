@@ -2,7 +2,7 @@
 from headers import *
 import cv2
 
-lhns = npy.load("LH_Number_Force_Segments.npy")
+# lhns = npy.load("LH_Number_Force_Segments.npy")
 rhns = npy.load("RH_Number_Force_Segments.npy")
 
 lh_seg_inds = npy.load("LH_Seg_Inds.npy")

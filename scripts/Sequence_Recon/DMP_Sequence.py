@@ -66,16 +66,15 @@ class Sequence():
 			for t in range(self.time_points[k],self.time_points[k+1]):
 				
 				prev_force[:] = 0
-				
-				if (k and (t-self.time_points[k])<((1-self.overlap_fraction)*self.duration)):
-					# prev_force = self.primitives[k-1].calc_rollout_force_time(t-self.time_points[k-1],self.roll_pos[t],self.goal_seq[k-1])					
+
+				# FORCE BLENDING:
+				if (k and (t-self.time_points[k])<((1-self.overlap_fraction)*self.duration)):				
 					prev_force = self.primitives[k-1].calc_rollout_force_time(t-self.time_points[k-1],self.roll_pos[self.time_points[k-1]],self.goal_seq[k-1])					
 				
-				cur_force = self.primitives[k-1].calc_rollout_force_time(t-self.time_points[k],self.roll_pos[self.time_points[k]],self.goal_seq[k])
-
-				force = cur_force + prev_force
+				cur_force = self.primitives[k-1].calc_rollout_force_time(t-self.time_points[k],self.roll_pos[self.time_points[k]],self.goal_seq[k])	
 
 				force = (1-self.blend[t-time_points[k]])*prev_force + self.blend[t-time_points[k]]*cur_force
+
 				self.calc_rollout_vel(t)
 				self.calc_rollout_pos(t)
 				self.calc_rollout_acceleration(k,t,force)
@@ -91,7 +90,7 @@ class Sequence():
 		with file('roll_acc.npy','w') as outfile:
 			npy.save(outfile,self.roll_acc)
 
-	def parse_trajectory(self,):
+	def parse_trajectory(self,traj):
 	
 		# Must initialize start_sequence and goal_sequence. 
 

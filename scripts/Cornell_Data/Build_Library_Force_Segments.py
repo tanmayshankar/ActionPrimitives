@@ -2,9 +2,6 @@
 from headers import *
 
 number_trajectories = 31
-# lhns = npy.load("Data/Cornell_Data/Primitive_Library/Subject1/LH_Number_Force_Segments.npy")
-# rhns = npy.load("Data/Cornell_Data/Primitive_Library/Subject1/RH_Number_Force_Segments.npy")
-
 lhns = npy.load("Data/Cornell_Data/Primitive_Library/Subject1/LH_Num_Seg_Interp.npy")
 rhns = npy.load("Data/Cornell_Data/Primitive_Library/Subject1/RH_Num_Seg_Interp.npy")
 

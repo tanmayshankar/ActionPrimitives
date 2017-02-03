@@ -9,11 +9,11 @@ class DMP():
 		self.betaz = self.alphaz/4
 		self.alpha = self.alphaz/3
 		
-		self.time_steps = 100
+		self.time_steps = 1000
 		self.tau = self.time_steps
 
 		self.dimensions = 2
-		self.number_kernels = 100
+		self.number_kernels = 1000
 		self.gaussian_kernels = npy.zeros((self.number_kernels,2))
 
 		self.weights = npy.zeros((self.number_kernels, self.dimensions))
@@ -28,7 +28,7 @@ class DMP():
 		self.vector_phase = npy.zeros(self.time_steps)
         
 # Defining Rollout variables.
-		self.rollout_time = 100
+		self.rollout_time = 1000
 		self.dt = 1./self.rollout_time
 		self.pos_roll = npy.zeros((self.rollout_time,self.dimensions))
 		self.vel_roll = npy.zeros((self.rollout_time,self.dimensions))
@@ -124,7 +124,7 @@ class DMP():
 		den = 0        
 		time = float(roll_time)/self.rollout_time
 # 		time = roll_time        
-		print(roll_time,time,self.calc_phase(time))
+		# print(roll_time,time,self.calc_phase(time))
 		for i in range(self.number_kernels):
 			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            
 			den += self.basis(i,time)
