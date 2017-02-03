@@ -4,18 +4,18 @@ from headers import *
 interp_time_points = 500
 num_files = 31
 
-rhns = npy.load("RH_Num_Seg_Interp.npy")
-rhi = npy.load("RH_Seg_Inds.npy")
+rhns = npy.load("Interp_Segment_All/RH_Num_Seg.npy")
+rhi = npy.load("Interp_Segment_All/RH_Seg_Ind.npy")
 
 def rh_move_files(i,j):
-	shutil.move("interp_demo_pos.npy","Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_pos.npy".format(i,j))
-	shutil.move("interp_demo_vel.npy","Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_vel.npy".format(i,j))
-	shutil.move("interp_demo_acc.npy","Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/interp_demo_acc.npy".format(i,j))
+	shutil.move("interp_demo_pos.npy","Traj_{0}/Interp_Segment_All/RH_Segment_{1}/interp_demo_pos.npy".format(i,j))
+	shutil.move("interp_demo_vel.npy","Traj_{0}/Interp_Segment_All/RH_Segment_{1}/interp_demo_vel.npy".format(i,j))
+	shutil.move("interp_demo_acc.npy","Traj_{0}/Interp_Segment_All/RH_Segment_{1}/interp_demo_acc.npy".format(i,j))
 
 def lh_move_files(i,j):
-	shutil.move("interp_demo_pos.npy","Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_pos.npy".format(i,j))
-	shutil.move("interp_demo_vel.npy","Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_vel.npy".format(i,j))
-	shutil.move("interp_demo_acc.npy","Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/interp_demo_acc.npy".format(i,j))
+	shutil.move("interp_demo_pos.npy","Traj_{0}/Interp_Segment_All/LH_Segment_{1}/interp_demo_pos.npy".format(i,j))
+	shutil.move("interp_demo_vel.npy","Traj_{0}/Interp_Segment_All/LH_Segment_{1}/interp_demo_vel.npy".format(i,j))
+	shutil.move("interp_demo_acc.npy","Traj_{0}/Interp_Segment_All/LH_Segment_{1}/interp_demo_acc.npy".format(i,j))
 
 for i in range(num_files):
 	for j in range(rhns[i]):
@@ -28,7 +28,7 @@ for i in range(num_files):
 		pos_fy = []
 		pos_fz = []
 
-		pos = npy.load("Traj_{0}/Force_Win_Interp_Seg/RH_Segment_{1}/demo_pos.npy".format(i,j))[:,:3]
+		pos = npy.load("Traj_{0}/Interp_Segment_All/RH_Segment_{1}/demo_pos.npy".format(i,j))[:,:3]
 		# print(pos)
 		tr = npy.linspace(0,len(pos)-1,len(pos))
 		tr_new = npy.linspace(0,len(pos)-1,interp_time_points+2)
@@ -61,8 +61,8 @@ for i in range(num_files):
 
 		rh_move_files(i,j)			
 
-lhns = npy.load("LH_Num_Seg_Interp.npy")		
-lhi = npy.load("LH_Seg_Inds.npy")
+lhns = npy.load("Interp_Segment_All/LH_Num_Seg.npy")		
+lhi = npy.load("Interp_Segment_All/LH_Seg_Ind.npy")
 
 for i in range(num_files):
 	for j in range(lhns[i]):	
@@ -77,7 +77,7 @@ for i in range(num_files):
 		pos_fy = []
 		pos_fz = []
 
-		pos = npy.load("Traj_{0}/Force_Win_Interp_Seg/LH_Segment_{1}/demo_pos.npy".format(i,j))[:,:3]
+		pos = npy.load("Traj_{0}/Interp_Segment_All/LH_Segment_{1}/demo_pos.npy".format(i,j))[:,:3]
 		print(len(pos),pos.shape)
 
 		tr = npy.linspace(0,len(pos)-1,len(pos))

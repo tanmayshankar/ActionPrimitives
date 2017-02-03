@@ -2,7 +2,7 @@
 from headers import *
 
 num_files = 31
-num_can = 50
+num_can = 100
 
 for i in range(num_files):
 
@@ -21,9 +21,10 @@ for i in range(num_files):
 	for t in range(len(lforce)-1):
 	    force_dot_prod[t] = npy.dot(normalized_forces[t],normalized_forces[t+1])		    
 
-	seg_can = npy.argsort(force_dot_prod)[0:num_can]
+	# seg_can = npy.argsort(force_dot_prod)[0:num_can]
+	seg_can = npy.argsort(force_dot_prod)
 
-	with file("Traj_{0}/Comp_Seg_Full/lh_seg_can_50.npy".format(i),'w') as outfile:
+	with file("Traj_{0}/Comp_Seg_Full/lh_seg_can_ALL.npy".format(i),'w') as outfile:
 		npy.save(outfile,seg_can)
 
 	# NOW FOR RIGHT:
@@ -40,8 +41,9 @@ for i in range(num_files):
 	for t in range(len(rforce)-1):
 	    force_dot_prod[t] = npy.dot(normalized_forces[t],normalized_forces[t+1])		    
 
-	seg_can = npy.argsort(force_dot_prod)[0:num_can]
+	# seg_can = npy.argsort(force_dot_prod)[0:num_can]
+	seg_can = npy.argsort(force_dot_prod)
 
-	with file("Traj_{0}/Comp_Seg_Full/rh_seg_can_50.npy".format(i),'w') as outfile:
+	with file("Traj_{0}/Comp_Seg_Full/rh_seg_can_ALL.npy".format(i),'w') as outfile:
 		npy.save(outfile,seg_can)
 
