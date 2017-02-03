@@ -2,7 +2,7 @@
 from headers import *
 
 num_files = 31
-num_can = 30
+num_can = 50
 
 for i in range(num_files):
 
@@ -23,7 +23,7 @@ for i in range(num_files):
 
 	seg_can = npy.argsort(force_dot_prod)[0:num_can]
 
-	with file("Traj_{0}/Comp_Seg_Full/lh_seg_can_30.npy".format(i),'w') as outfile:
+	with file("Traj_{0}/Comp_Seg_Full/lh_seg_can_50.npy".format(i),'w') as outfile:
 		npy.save(outfile,seg_can)
 
 	# NOW FOR RIGHT:
@@ -42,6 +42,6 @@ for i in range(num_files):
 
 	seg_can = npy.argsort(force_dot_prod)[0:num_can]
 
-	with file("Traj_{0}/Comp_Seg_Full/rh_seg_can_30.npy".format(i),'w') as outfile:
+	with file("Traj_{0}/Comp_Seg_Full/rh_seg_can_50.npy".format(i),'w') as outfile:
 		npy.save(outfile,seg_can)
 

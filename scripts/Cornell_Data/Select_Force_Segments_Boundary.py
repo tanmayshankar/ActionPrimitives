@@ -2,7 +2,7 @@
 from headers import *
 
 num_files = 31
-num_can = 30 
+num_can = 30
 
 for i in range(num_files):
 	seg_can = npy.load("Traj_{0}/Comp_Seg_Full/rh_seg_can_30.npy".format(i))	
@@ -38,4 +38,5 @@ for i in range(num_files):
 	with file("rh_window_seg_ind.npy",'w') as outfile:		
 		npy.save(outfile,seg_indices)
 
-	shutil.move("rh_window_seg_ind.npy","Traj_{0}/Comp_Seg_Full/rh_window_seg_ind.npy".format(i))
+	# shutil.move("rh_window_seg_ind.npy","Traj_{0}/Comp_Seg_Full/rh_window_seg_ind.npy".format(i))
+	shutil.move("rh_window_seg_ind.npy","Traj_{0}/Comp_Seg_Full/rh_seg_ind_50.npy".format(i))
