@@ -4,11 +4,14 @@ from DMP_Segment import *
 
 class Sequence():
 
-	def __init__(self,number_primitives,duration):
+	def __init__(self,meta_force_weights,start_seq,goal_seq,duration):
 
-		self.number_primitives = number_primitives
+		self.number_primitives = meta_force_weights.shape[0]
 		self.duration = duration
 		self.primitives = [DMP(duration) for i in range(self.number_primitives)]
+
+		for i in range(self.number_primitives):
+			self.primitives.load_weights(meta_force_weights[i])
 
 		self.overlap_fraction = 0.95
 		self.total_time = (self.number_primitives-1)*self.duration*self.overlap_fraction + self.duration
@@ -23,8 +26,8 @@ class Sequence():
 		self.roll_vel = npy.zeros((self.total_time,3))
 		self.roll_acc = npy.zeros((self.total_time,3))
 
-		self.start_seq = npy.zeros((number_primitives,3))
-		self.goal_seq = npy.zeros((number_primitives,3))
+		self.start_seq = start_seq
+		self.goal_seq = goal_seq
 
 		self.dt = 1.
 		self.tau = self.primitives[0].tau
@@ -58,6 +61,9 @@ class Sequence():
 		self.roll_vel[0] = self.init_vel		
 
 	def meta_rollout(self):
+		
+		self.initialize_variables()
+		self.initialize_meta_rollout()
 
 		force = self.primitives[0].calc_rollout_force_time(0,self.roll_pos[0],self.goal_seq[0])
 		self.calc_rollout_acceleration(0,0,force)
@@ -90,12 +96,20 @@ class Sequence():
 		with file('roll_acc.npy','w') as outfile:
 			npy.save(outfile,self.roll_acc)
 
-	def parse_trajectory(self,traj):
-	
-		# Must initialize start_sequence and goal_sequence. 
+def main(args):    
 
-		self.
-							
+	duration = 500
+	meta_force_weights = npy.load(str(sys.argv[1]))
+	start_seq = npy.load(str(sys.argv[2]))
+	goal_seq = npy.load(str(sys.argv[3]))
+
+	seq = Sequence(meta_force_weights,start_seq,goal_seq,duration)
+	seq.meta_rollout()
+	seq.save_rollout()
+
+if __name__ == '__main__':
+    main(sys.argv)
+		
 
 
 
