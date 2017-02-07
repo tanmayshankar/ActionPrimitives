@@ -14,7 +14,7 @@ class DMP():
 
 		self.dimensions = 3
 		# self.number_kernels = max(500,self.time_steps)
-		self.number_kernels = 500
+		self.number_kernels = 100
 		self.gaussian_kernels = npy.zeros((self.number_kernels,2))
 
 		self.weights = npy.zeros((self.number_kernels, self.dimensions))
@@ -26,8 +26,7 @@ class DMP():
 		self.target_forces = npy.zeros((self.time_steps, self.dimensions))        
 		self.phi = npy.zeros((self.number_kernels, self.time_steps, self.time_steps))
 		self.eta = npy.zeros((self.time_steps, self.dimensions))
-		self.vector_phase = npy.zeros(self.time_steps)
-		print("Hello")
+		self.vector_phase = npy.zeros(self.time_steps)		
         
 # Defining Rollout variables.
 		self.rollout_time = self.time_steps
@@ -59,7 +58,8 @@ class DMP():
 		self.vector_phase = self.calc_vector_phase(t_range)
 		self.gaussian_kernels[:,0] = self.vector_phase
 		
-		dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
+		dummy = (npy.diff(self.gaussian_kernels[:,0]))**2        		
+		# dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
 		# dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
 		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
 		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
@@ -122,12 +122,11 @@ class DMP():
 		for i in range(self.number_kernels):
 			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            
 			den += self.basis(i,time)
-		self.force_roll[roll_time] *= (goal-start)*self.calc_phase(time)/den
-		print(self.force_roll[roll_time])
+		self.force_roll[roll_time] *= (goal-start)*self.calc_phase(time)/den		
 		return self.force_roll[roll_time]
 
 	def calc_rollout_acceleration(self,time):        
-		self.acc_roll[time] = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_roll[time]) - self.tau*self.vel_roll[time]) + self.force_roll[time])
+		self.acc_roll[time] = (1./self.tau**2)*(self.alphaz * (self.betaz * (self.goal - self.pos_roll[time]) - self.tau*self.vel_roll[time]) + self.force_roll[time])
         
 	def calc_rollout_vel(self,time):		
 		self.vel_roll[time] = self.vel_roll[time-1] + self.acc_roll[time-1]*self.dt

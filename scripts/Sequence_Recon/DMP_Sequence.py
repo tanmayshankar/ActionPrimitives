@@ -11,16 +11,19 @@ class Sequence():
 		self.primitives = [DMP(duration) for i in range(self.number_primitives)]
 
 		for i in range(self.number_primitives):
-			self.primitives.load_weights(meta_force_weights[i])
+			self.primitives[i].load_weights(meta_force_weights[i])
 
 		self.overlap_fraction = 0.95
-		self.total_time = (self.number_primitives-1)*self.duration*self.overlap_fraction + self.duration
+		self.overlap = 25		
+		self.time_points = npy.zeros(self.number_primitives+1)		
 
-		self.time_points = npy.zeros(self.number_primitives+1)
-		self.time_points[-1] = self.total_time
-
-		for i in range(self.number_primitives):
-			self.time_points[i] = i*self.overlap_fraction*self.duration
+		for i in range(1,self.number_primitives+1):
+			self.time_points[i] = self.time_points[i-1]+self.duration-self.overlap
+	
+		self.time_points = self.time_points.astype(int)			
+		self.total_time = self.time_points[-1]
+		# print(self.time_points)
+		# print(self.total_time)
 
 		self.roll_pos = npy.zeros((self.total_time,3))
 		self.roll_vel = npy.zeros((self.total_time,3))
@@ -34,6 +37,8 @@ class Sequence():
 		self.alphaz = self.primitives[0].alphaz
 		self.betaz = self.primitives[0].betaz
 		self.blend = npy.zeros(int(self.duration*(1.-self.overlap_fraction)))
+
+		self.init_vel = npy.zeros(3)		
 
 	def initialize_variables(self):
 		self.blend_function()		
@@ -67,19 +72,21 @@ class Sequence():
 
 		force = self.primitives[0].calc_rollout_force_time(0,self.roll_pos[0],self.goal_seq[0])
 		self.calc_rollout_acceleration(0,0,force)
-
+		prev_force = npy.zeros(3)
+		
 		for k in range(self.number_primitives):
 			for t in range(self.time_points[k],self.time_points[k+1]):
 				
 				prev_force[:] = 0
 
 				# FORCE BLENDING:
-				if (k and (t-self.time_points[k])<((1-self.overlap_fraction)*self.duration)):				
-					prev_force = self.primitives[k-1].calc_rollout_force_time(t-self.time_points[k-1],self.roll_pos[self.time_points[k-1]],self.goal_seq[k-1])					
-				
 				cur_force = self.primitives[k-1].calc_rollout_force_time(t-self.time_points[k],self.roll_pos[self.time_points[k]],self.goal_seq[k])	
 
-				force = (1-self.blend[t-time_points[k]])*prev_force + self.blend[t-time_points[k]]*cur_force
+				# if (k and (t-self.time_points[k])<((1-self.overlap_fraction)*self.duration)):				
+				if (k and (t-self.time_points[k])<self.overlap):
+					prev_force = self.primitives[k-1].calc_rollout_force_time(t-self.time_points[k-1],self.roll_pos[self.time_points[k-1]],self.goal_seq[k-1])										
+
+				force = (1-self.blend[min(self.overlap-1,t-self.time_points[k])])*prev_force + self.blend[min(self.overlap-1,t-self.time_points[k])]*cur_force
 
 				self.calc_rollout_vel(t)
 				self.calc_rollout_pos(t)
