@@ -53,7 +53,7 @@ class Sequence():
 			self.blend[t] = self.sigmoid(0.5*(t-((self.overlap_fraction+1.)/2)*self.duration))
 
 	def calc_rollout_acceleration(self,k,time,forcing_term):        
-		self.roll_acc[time] = (1/self.tau**2)*(self.alphaz * (self.betaz * (self.goal_seq[k] - self.roll_pos[time]) - self.tau*self.roll_vel[time]) + forcing_term)
+		self.roll_acc[time] = (1./self.tau**2)*(self.alphaz * (self.betaz * (self.goal_seq[k] - self.roll_pos[time]) - self.tau*self.roll_vel[time]) + forcing_term)
         
 	def calc_rollout_vel(self,time):		
 		self.roll_vel[time] = self.roll_vel[time-1] + self.roll_acc[time-1]*self.dt
