@@ -8,8 +8,8 @@ number_dimensions = 3
 segment_length = 500
 number_clusters = 40
 
-lh_number_samples = 177
-rh_number_samples = 121
+lh_number_samples = 207
+rh_number_samples = 140
 
 lh_meta_weights = npy.load("LH_Meta_Weights.npy")
 rh_meta_weights = npy.load("RH_Meta_Weights.npy")
