@@ -59,8 +59,8 @@ class DMP():
 		self.gaussian_kernels[:,0] = self.vector_phase
 		
 		# dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
-		# dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
-		dummy = (npy.diff(self.gaussian_kernels[:,0]))**2        						
+		dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
+		# dummy = (npy.diff(self.gaussian_kernels[:,0]))**2        						
 		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
 		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
 
