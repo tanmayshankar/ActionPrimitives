@@ -117,7 +117,8 @@ class DMP():
 		return self.force_roll[roll_time]
 
 	def calc_rollout_force_time(self,roll_time,start,goal):
-		den = 0        		
+		den = 0  
+		self.force_roll[roll_time,:] = 0
 		time = roll_time        
 		for i in range(self.number_kernels):
 			self.force_roll[roll_time] += self.basis(i,time)*self.weights[i]            

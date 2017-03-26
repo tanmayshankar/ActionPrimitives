@@ -3,7 +3,7 @@ from headers import *
 
 class DMP():
 	
-	def __init__(self,time_steps=100):
+	def __init__(self,time_steps=100,num_ker=100, kernel_bw=2):
 
 		self.alphaz = 25.0
 		self.betaz = self.alphaz/4
@@ -14,7 +14,7 @@ class DMP():
 
 		self.dimensions = 3
 		# self.number_kernels = max(500,self.time_steps)
-		self.number_kernels = 100
+		self.number_kernels = num_ker
 		self.gaussian_kernels = npy.zeros((self.number_kernels,2))
 
 		self.weights = npy.zeros((self.number_kernels, self.dimensions))
@@ -27,6 +27,7 @@ class DMP():
 		self.phi = npy.zeros((self.number_kernels, self.time_steps, self.time_steps))
 		self.eta = npy.zeros((self.time_steps, self.dimensions))
 		self.vector_phase = npy.zeros(self.time_steps)
+		self.kernel_bw = kernel_bw
         
 # Defining Rollout variables.
 		self.rollout_time = self.time_steps
@@ -59,10 +60,13 @@ class DMP():
 		self.vector_phase = self.calc_vector_phase(t_range)
 		self.gaussian_kernels[:,0] = self.vector_phase
 		
-		# dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
-		dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2        				
-		# dummy = (npy.diff(self.gaussian_kernels[:,0]))**2        						
+		# # dummy = (npy.diff(self.gaussian_kernels[:,0]*0.55))**2        		
+		# # dummy = (npy.diff(self.gaussian_kernels[:,0]*2))**2
+		# # dummy = (npy.diff(self.gaussian_kernels[:,0]))**2        						
+
+		dummy = (npy.diff(self.gaussian_kernels[:,0]*self.kernel_bw))**2
 		self.gaussian_kernels[:,1] = 1. / npy.append(dummy,dummy[-1])
+		
 		# self.gaussian_kernels[:,1] = self.number_kernels/self.gaussian_kernels[:,0]
 
 	def calc_phase(self,time):

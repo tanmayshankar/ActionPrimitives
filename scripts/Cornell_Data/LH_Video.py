@@ -17,7 +17,8 @@ print(rh_seg_inds)
 
 
 image_paths = npy.load("IMAGE_PATHS.npy")
-num_files = 10
+# num_files = 10
+num_files = 9
 # num_files = 5
 seg = 0
 window = 10

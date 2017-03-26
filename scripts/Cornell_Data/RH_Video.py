@@ -3,17 +3,23 @@ from headers import *
 import cv2
 
 # lhns = npy.load("LH_Number_Force_Segments.npy")
-rhns = npy.load("RH_Number_Force_Segments.npy")
+# rhns = npy.load("RH_Number_Force_Segments.npy")
 
-lh_seg_inds = npy.load("LH_Seg_Inds.npy")
-rh_seg_inds = npy.load("RH_Seg_Inds.npy")
+# lh_seg_inds = npy.load("LH_Seg_Inds.npy")
+# rh_seg_inds = npy.load("RH_Seg_Inds.npy")
+
+lhns = npy.load("Interp_Segment_All/LH_Num_Seg.npy")
+lh_seg_inds = npy.load("Interp_Segment_All/LH_Seg_Ind.npy")
+# rh_seg_inds = npy.load("RH_Seg_Inds.npy")
 
 image_paths = npy.load("IMAGE_PATHS.npy")
-num_files = 4
+sort_inds = npy.load("Sorting_Indices.npy")
+num_files = 14
 seg = 0
 window = 10
 
-for i in range(num_files-1,num_files):
+for j in range(num_files-1,num_files):
+	i = sort_inds[j]
 	for k in range(len(lh_seg_inds[i])-1):
 		for t in range(lh_seg_inds[i][k],lh_seg_inds[i][k+1]):
 			
